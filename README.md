@@ -1,6 +1,6 @@
 ## React Dictionary App
 
-A simple React-based dictionary app to look up word definitions using DictionaryApi and design with Tailwind CSS.
+A simple React-based dictionary app to look up word Aramaic <-> English definitions using a the Jastrow Talmud Dictionary paired with a Tailwind CSS design.
 
 ### Screenshots & Live Demo
 
@@ -59,7 +59,5 @@ You can now access this application by navigating to http://localhost:5173/.
 ### Special Acknowledgement to the Author of the Initial Template
 [Anurag Nagar](mailto:nagaranurag1999@gmail.com)
 ### Screenshots & Live Demo of the Initial Template by Anurag Nagar
-
 You can see a live demo of this Application by clicking [HERE](https://dictionary-reactjs-app.vercel.app/).
-
 ![Screenshot](https://github.com/anuraagnagar/dictionary-app/blob/main/content/screenshots/Imageshow.jpg)
