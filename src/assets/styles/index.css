@@ -1,3 +1,110 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom styles for dictionary entries */
+.dictionary-entry {
+  /* General text styling */
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Handle italics and Hebrew/Aramaic text better */
+.dictionary-entry italic {
+  font-style: italic;
+  color: theme('colors.pink.700');
+}
+
+.dark .dictionary-entry italic {
+  color: theme('colors.pink.400');
+}
+
+/* Better formatting for superscripts in references */
+.dictionary-entry sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  top: -0.5em;
+}
+
+/* Improved formatting for entry sections */
+.dictionary-entry div {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Special formatting for Hebrew/Aramaic text */
+.dictionary-entry span[lang="he"],
+.dictionary-entry *[lang="he"] {
+  font-family: "SBL Hebrew", "Times New Roman", serif;
+  font-size: 1.15em;
+}
+
+/* Style cross-references */
+.dictionary-entry reference {
+  color: theme('colors.blue.600');
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  cursor: pointer;
+}
+
+.dark .dictionary-entry reference {
+  color: theme('colors.blue.400');
+}
+
+/* Add proper spacing for abbreviations */
+.dictionary-entry abbr {
+  letter-spacing: 0.05em;
+}
+
+/* Text size toggle styles - improved implementation */
+.text-large .dictionary-entry {
+  font-size: 1.8rem;
+  line-height: 1.4;
+}
+
+.text-large .dictionary-entry span, 
+.text-large .dictionary-entry div,
+.text-large .dictionary-entry p {
+  font-size: 1.8rem;
+}
+
+.text-large .dictionary-entry .font-bold.text-xl {
+  font-size: 2.2rem;
+}
+
+.text-large .dictionary-entry .font-semibold.text-lg {
+  font-size: 2rem;
+}
+
+.text-large .dictionary-entry i {
+  font-size: 1.8rem;
+}
+
+.text-large .dictionary-entry sup {
+  font-size: 1.2rem;
+  top: -0.5em;
+}
+
+/* Fix for the search box text getting smaller */
+.text-large input[type="search"],
+.text-large input[type="text"] {
+  font-size: 1.5rem !important; /* Force large text in search inputs */
+}
+
+.text-large input::placeholder {
+  font-size: 1.5rem;
+}
+
+/* Ensure search button keeps proper size ratio with input */
+.text-large .relative svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Ensure we don't mess with other UI elements */
+.text-large button:not(.relative button),
+.text-large select {
+  font-size: inherit;
+}

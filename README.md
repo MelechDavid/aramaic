@@ -4,9 +4,9 @@ A simple React-based dictionary app to look up word definitions using Dictionary
 
 ### Screenshots & Live Demo
 
-You can see a live demo of this Application by clicking [HERE](https://dictionary-reactjs-app.vercel.app/).
+You can see a live demo of this Application by clicking [HERE](https://aramaic.vercel.app/).
 
-![Screenshot](https://github.com/anuraagnagar/dictionary-app/blob/main/content/screenshots/Imageshow.jpg)
+![Screenshot](https://github.com/MelechDavid/aramaic/blob/main/content/screenshots/Imageshow.jpg)
 
 ### Prerequisites
 
@@ -23,19 +23,20 @@ To run this app locally, follow these steps:
 1. Clone the github repository.
 
 ```bash
-git clone https://github.com/anuraagnagar/dictionary-app.git
+git clone https://github.com/MelechDavid/aramaic.git
 ```
 
-2. Change the project directory.
+2. If you need to change the project directory. (Optional)
 
 ```bash
-cd dictionary-app
+cd aramaic
 ```
 
 3. Install project dependency using NPM.
 
 ```bash
 npm install
+npm install xml2js
 ```
 
 4. Start the development server.
@@ -44,8 +45,21 @@ npm install
 npm run dev
 ```
 
+4. Start the development server that can be accessed on your local network.
+
+```bash
+npx vite --host
+```
+
 You can now access this application by navigating to http://localhost:5173/.
 
 ### Author
+[David Weinberg](mailto:dave.a.weinberg@gmail.com)
 
+### Special Acknowledgement to the Author of the Initial Template
 [Anurag Nagar](mailto:nagaranurag1999@gmail.com)
+### Screenshots & Live Demo of the Initial Template by Anurag Nagar
+
+You can see a live demo of this Application by clicking [HERE](https://dictionary-reactjs-app.vercel.app/).
+
+![Screenshot](https://github.com/anuraagnagar/dictionary-app/blob/main/content/screenshots/Imageshow.jpg)

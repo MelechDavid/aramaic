@@ -11,7 +11,7 @@ const NotFound = () => {
                 />
             </div>
             <h5 className="my-4 text-2xl text-center font-bold tracking-tight text-gray-500 dark:text-slate-500">
-                Sorry, we couldn't find any result.
+                No results.
             </h5>
         </div>
     );

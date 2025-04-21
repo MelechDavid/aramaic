@@ -7,6 +7,7 @@ export const ThemeContext = createContext();
 
 const ThemeContextProvider = ({ children }) => {
     const [mode, setMode] = useLocalStorage("theme", DEFAULT_THEME);
+    const [textSize, setTextSize] = useLocalStorage("textSize", "normal");
 
     const setThemeClass = () => {
         const element = document.querySelector("html");
@@ -21,10 +22,21 @@ const ThemeContextProvider = ({ children }) => {
 
     useEffect(() => setThemeClass(), [mode]);
 
+    useEffect(() => {
+        const element = document.querySelector("html");
+        if (textSize === "large") {
+            element.classList.add("text-large");
+        } else {
+            element.classList.remove("text-large");
+        }
+    }, [textSize]);
+
     const value = {
         mode,
         setMode,
         setThemeClass,
+        textSize,
+        setTextSize
     };
 
     return (
