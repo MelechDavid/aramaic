@@ -75,9 +75,9 @@ const ShowContent = ({ data, hasMore, loading, onLoadMore, totalResults, expande
                                         </div>
                                     ) : (
                                         <>
-                                            <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                            {/* <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                                                 Entry ID: {expandedData.id}
-                                            </div>
+                                            </div> */}
                                             
                                             <section className="mb-5">
                                                 {/* <h3 className="text-xl font-medium mb-3 text-gray-700 dark:text-gray-300">
