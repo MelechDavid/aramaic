@@ -6,7 +6,7 @@ A simple React-based dictionary app to look up word definitions using Dictionary
 
 You can see a live demo of this Application by clicking [HERE](https://aramaic.vercel.app/).
 
-![Screenshot](https://github.com/MelechDavid/aramaic/blob/main/content/screenshots/Imageshow.jpg)
+![Screenshot](https://github.com/MelechDavid/aramaic/main/content/screenshots/Imageshow.jpg)
 
 ### Prerequisites
 
