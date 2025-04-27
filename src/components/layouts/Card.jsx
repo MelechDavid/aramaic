@@ -44,7 +44,7 @@ const Card = () => {
                 />
                 
                 {!searchTerm ? (
-                    <div className="my-16 text-center text-gray-500 dark:text-gray-400">
+                    <div className="my-16 text-center text-black dark:text-gray-400">
                         <p>Type Aramaic or English words to search the Jastrow Talmud Dictionary</p>
                     </div>
                 ) : fetchLoading && !data.length ? (
