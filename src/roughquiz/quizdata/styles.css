@@ -251,9 +251,9 @@ nav ul li a:hover {
 }
 
 @keyframes incorrectAnimation {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-5px); }
-  40%, 80% { transform: translateX(5px); }
+  0%, 100% { transform: translateX(0); box-shadow: 0 0 0px rgba(255, 71, 87, 0); }
+  20%, 60% { transform: translateX(-5px); box-shadow: 0 0 15px rgba(255, 71, 87, 0.7); }
+  40%, 80% { transform: translateX(5px); box-shadow: 0 0 15px rgba(255, 71, 87, 0.7); }
 }
 
 .correct {
@@ -265,7 +265,7 @@ nav ul li a:hover {
 .incorrect {
   background-color: rgba(255, 71, 87, 0.3);
   border: 2px solid #FF4757;
-  animation: incorrectAnimation 0.5s ease;
+  animation: incorrectAnimation 0.6s ease;
 }
 
 .quiz-controls {
