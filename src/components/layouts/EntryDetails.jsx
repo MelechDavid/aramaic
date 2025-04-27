@@ -6,13 +6,30 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
   // Disable scrolling on the body when entry details are visible
   useEffect(() => {
     if (isSlideIn) {
+      // Lock main body scrolling when entry is open
       document.body.classList.add('entry-details-open');
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${window.scrollY}px`;
     } else {
+      // Restore scrolling when entry is closed
+      const scrollY = document.body.style.top;
       document.body.classList.remove('entry-details-open');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
     
     return () => {
+      // Cleanup in case component unmounts 
       document.body.classList.remove('entry-details-open');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
     };
   }, [isSlideIn]);
 
@@ -24,11 +41,11 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
       className={`fixed inset-0 bg-white dark:bg-gray-900 z-50 overflow-y-auto transform transition-transform duration-300 ease-in-out ${slideClass}`}
       style={{ willChange: 'transform' }}
     >
-      <div className="p-4 max-w-3xl mx-auto">
-        {/* Back button */}
+      {/* Fixed header with back button that stays visible when scrolling */}
+      <div className="sticky top-0 left-0 z-[51] bg-gradient-to-b from-white dark:from-gray-900 to-transparent pt-4 pb-8 pointer-events-none">
         <button
           onClick={onBack}
-          className="fixed top-4 left-4 p-2 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 z-50 transition-all hover:scale-110"
+          className="absolute top-4 left-4 p-2 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all hover:scale-110 pointer-events-auto"
           aria-label="Back to search results"
         >
           <svg
@@ -46,7 +63,9 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
             />
           </svg>
         </button>
+      </div>
 
+      <div className="p-4 max-w-3xl mx-auto">
         {/* Entry content */}
         <div className="pt-12 pb-16">
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
