@@ -8,7 +8,7 @@ const GrammarButton = () => {
   return (
     <button 
       onClick={openQuiz}
-      className="flex items-center justify-center w-10 h-10 rounded-full bg-primary dark:bg-secondary text-white shadow-md hover:bg-opacity-90 transition-all duration-300"
+      className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-700 dark:bg-secondary text-white shadow-md hover:bg-opacity-90 transition-all duration-300"
       title="Aramaic Grammar Quiz"
       aria-label="Open Aramaic Grammar Quiz"
     >

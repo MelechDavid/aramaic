@@ -19,36 +19,6 @@ const AramicQuiz = () => {
     }
   };
 
-  // 100 Talmudic Aramaic Quiz Questions
-//   const quizData = [
-//     {
-//       "category": "Binyanim",
-//       "question": "What binyan (verb form) is the Aramaic word 'קְטַל' (q'tal)?",
-//       "options": [
-//         "Pe'al",
-//         "Pa'el",
-//         "Af'el",
-//         "Itpe'el"
-//       ],
-//       "correct": 0,
-//       "explanation": "The Aramaic word 'קְטַל' (q'tal) is in the <b>Pe'al</b> form, which is the basic verb form in Aramaic. This is equivalent to the Hebrew 'Qal' binyan. Pe'al is used for simple actions in their active voice.",
-//       "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Pe'al Conjugation Example</h4>\n                    <table>\n                        <tr><th>Form</th><th>Transliteration</th><th>Meaning</th></tr>\n                        <tr><td>קְטַל</td><td>q'tal</td><td>he killed</td></tr>\n                        <tr><td>קָטְלָא</td><td>qāṭlā</td><td>she killed</td></tr>\n                        <tr><td>קְטַלְתְּ</td><td>q'talt</td><td>you killed</td></tr>\n                        <tr><td>קְטַלִית</td><td>q'talit</td><td>I killed</td></tr>\n                    </table>\n                </div>"
-//     },
-//     {
-//       "category": "Independent Pronouns",
-//       "question": "What is the Aramaic independent pronoun for 'we'?",
-//       "options": [
-//         "אֲנַחְנָא (anakhna)",
-//         "אַנְתּוּן (antun)",
-//         "אִנּוּן (innun)",
-//         "הִנּוּן (hinnun)"
-//       ],
-//       "correct": 0,
-//       "explanation": "The Aramaic demonstrative pronoun for 'that' (masculine) is <b>הַהוּא</b> (hahu). It is used to point out a masculine object that is distant from the speaker.",
-//       "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Demonstrative 'That' (Masculine) Examples</h4>\n                    <table>\n                        <tr><th>Demonstrative</th><th>Pronunciation</th><th>Usage Example</th></tr>\n                        <tr><td>הַהוּא</td><td>hahu</td><td>הַהוּא גַּבְרָא (hahu gavra) - that man</td></tr>\n                        <tr><td>הַהוּא</td><td>hahu</td><td>הַהוּא סִפְרָא (hahu sifra) - that book</td></tr>\n                        <tr><td>הַהוּא</td><td>hahu</td><td>הַהוּא יוֹמָא (hahu yoma) - that day</td></tr>\n                        <tr><td>הַהוּא</td><td>hahu</td><td>בְּהַהוּא זִמְנָא (b'hahu zimna) - at that time</td></tr>\n                    </table>\n                </div>"
-//     }
-//   ];
-
   const handleOptionSelect = (optionIndex) => {
     if (selectedOption !== null || showExplanation) return;
     
@@ -89,29 +59,29 @@ const AramicQuiz = () => {
   };
 
   const getOptionClass = (index) => {
-    let baseClass = "quiz-option relative p-4 border rounded-lg mb-3 cursor-pointer transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-800";
+    let baseClass = "quiz-option relative p-4 border rounded-lg mb-3 cursor-pointer transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800";
     
-    if (selectedOption === null) return baseClass;
+    if (selectedOption === null) return `${baseClass} text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700`; 
     
     if (selectedOption === index) {
       if (index === quizData[currentQuestion].correct) {
-        return `${baseClass} correct`;
+        return `${baseClass} correct bg-green-600 text-white border-green-600`;
       } else {
-        return `${baseClass} incorrect`;
+        return `${baseClass} incorrect bg-red-600 text-white border-red-600`;
       }
     }
     
     if (index === quizData[currentQuestion].correct && showExplanation) {
-      return `${baseClass} correct-answer`;
+      return `${baseClass} correct-answer bg-green-600 text-white border-green-600`;
     }
     
-    return baseClass;
+    return `${baseClass} text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700`; 
   };
 
   if (quizCompleted) {
     return (
-      <div className="quiz-completion p-6 bg-white dark:bg-gray-900 rounded-lg shadow-xl">
-        <h2 className="text-2xl font-bold mb-6 text-center">Quiz Completed!</h2>
+      <div className="quiz-completion p-6 bg-white dark:bg-gray-900 rounded-lg shadow-xl text-gray-800 dark:text-gray-200">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">Quiz Completed!</h2>
         
         <div className="score-display text-center mb-8">
           <div className="text-4xl font-bold mb-2 text-pink-600">{correctAnswers} / {quizData.length}</div>
@@ -136,10 +106,10 @@ const AramicQuiz = () => {
   }
 
   return (
-    <div className="quiz-container max-w-4xl mx-auto">
+    <div className="quiz-container max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg text-gray-800 dark:text-gray-200">
       <div className="quiz-header mb-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Aramaic Quiz</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Aramaic Quiz</h2>
           <div className="quiz-progress text-gray-600 dark:text-gray-400">
             Question {currentQuestion + 1} of {quizData.length}
           </div>
@@ -157,7 +127,7 @@ const AramicQuiz = () => {
         <div className="category text-sm font-medium text-pink-600 mb-2">
           {quizData[currentQuestion].category}
         </div>
-        <h3 className="text-xl font-semibold mb-4">
+        <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
           {quizData[currentQuestion].question}
         </h3>
         
@@ -175,8 +145,8 @@ const AramicQuiz = () => {
       </div>
       
       {showExplanation && (
-        <div className="explanation mt-8 p-4 border rounded-lg bg-gray-50 dark:bg-gray-800">
-          <h4 className="font-semibold mb-2">Explanation:</h4>
+        <div className="explanation mt-8 p-4 border rounded-lg bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200">
+          <h4 className="font-semibold mb-2 text-gray-900 dark:text-white">Explanation:</h4>
           <div dangerouslySetInnerHTML={{ __html: quizData[currentQuestion].explanation }} />
           
           {quizData[currentQuestion].diagram && (
