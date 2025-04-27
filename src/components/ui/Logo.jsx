@@ -13,7 +13,7 @@ const Logo = () => {
                     src={AppLogo}
                 />
                 <h1 className="font-semibold text-2xl md:text-3xl my-auto">
-                    {SITE_TITLE}
+                    {SITE_TITLE} // add the Grammar button to the right of 
                 </h1>
             </div>
         </a>
