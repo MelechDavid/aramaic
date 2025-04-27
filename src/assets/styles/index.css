@@ -3,18 +3,23 @@
 @tailwind utilities;
 
 /* Custom styles for dictionary entries */
-.dictionary-entry {
+.dictionary-entry,
+.text-large .dictionary-entry {
   /* General text styling */
   font-size: 1rem;
   line-height: 1.6;
+  transition: all 0.3s ease-in-out;
 }
 
 /* Handle italics and Hebrew/Aramaic text better */
+.dictionary-entry i,
 .dictionary-entry italic {
   font-style: italic;
   color: theme('colors.pink.700');
+  font-weight: 500;
 }
 
+.dark .dictionary-entry i,
 .dark .dictionary-entry italic {
   color: theme('colors.pink.400');
 }
@@ -58,6 +63,78 @@
   letter-spacing: 0.05em;
 }
 
+/* Main headword styling - make it stand out */
+.dictionary-entry .font-bold.text-xl {
+  font-size: 1.5rem;
+  color: theme('colors.pink.700');
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  border-bottom: 2px solid theme('colors.pink.200');
+  padding-bottom: 0.25rem;
+}
+
+.dark .dictionary-entry .font-bold.text-xl {
+  color: theme('colors.pink.400');
+  border-bottom-color: theme('colors.pink.800');
+}
+
+/* Entry number styling */
+.dictionary-entry .font-semibold.text-lg {
+  color: theme('colors.blue.600');
+  margin-right: 0.25rem;
+  font-weight: 700;
+}
+
+.dark .dictionary-entry .font-semibold.text-lg {
+  color: theme('colors.blue.400');
+}
+
+/* Binyan (verb form) headings */
+.dictionary-entry .font-bold {
+  margin-top: 1rem;
+  color: theme('colors.indigo.700');
+  background: theme('colors.indigo.50');
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  display: inline-block;
+}
+
+.dark .dictionary-entry .font-bold {
+  color: theme('colors.indigo.300');
+  background: theme('colors.indigo.900');
+}
+
+/* Add subtle highlighting for definitions */
+.dictionary-entry span.font-semibold + span,
+.dictionary-entry span.font-semibold + i {
+  background-color: rgba(244, 114, 182, 0.08);
+  border-radius: 0.25rem;
+  padding: 0 0.25rem;
+}
+
+.dark .dictionary-entry span.font-semibold + span,
+.dark .dictionary-entry span.font-semibold + i {
+  background-color: rgba(244, 114, 182, 0.05);
+}
+
+/* Add visual separation between sections */
+.dictionary-entry div + div,
+.dictionary-entry span.font-semibold {
+  margin-top: 1rem;
+}
+
+/* Add subtle box shadow and border to expanded entry container */
+div[data-entry-id][class*="bg-white"] {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border-left: 3px solid theme('colors.pink.500');
+}
+
+.dark div[data-entry-id][class*="bg-gray-800"] {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-left: 3px solid theme('colors.pink.600');
+}
+
 /* Text size toggle styles - improved implementation */
 .text-large .dictionary-entry {
   font-size: 1.8rem;
@@ -78,7 +155,8 @@
   font-size: 2rem;
 }
 
-.text-large .dictionary-entry i {
+.text-large .dictionary-entry i,
+.text-large .dictionary-entry italic {
   font-size: 1.8rem;
 }
 

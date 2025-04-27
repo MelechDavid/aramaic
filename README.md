@@ -1,6 +1,10 @@
 ## React Dictionary App
 
 A simple React-based dictionary app to look up word Aramaic <-> English definitions using a the Jastrow Talmud Dictionary paired with a Tailwind CSS design.
+Trying to learn Mishna and Gemara? Features coming soon to help you accomplish Aramaic Literacy, such as flashcards, quizzes in grammar and breaking down verses from scripture. Will focus on developing literacy in binyan conjugations. Live Demo: https://aramaic.vercel.app/
+Virtual resume: https://a4ya4ewrqc.app.yourware.so/
+Gallery website: https://loriweinberg.com
+LinkedIn: https://www.linkedin.com/in/davidaweinberg/
 
 ### Screenshots & Live Demo
 
