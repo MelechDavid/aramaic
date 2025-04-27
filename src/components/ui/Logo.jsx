@@ -4,7 +4,7 @@ import { GIT_REPO_LINK, SITE_TITLE } from "../../utils/constants";
 const Logo = () => {
     return (
         <a
-            href={GIT_REPO_LINK}
+            //href={GIT_REPO_LINK}
             target="_blank">
             <div className="flex justify-start w-fit">
                 <img
