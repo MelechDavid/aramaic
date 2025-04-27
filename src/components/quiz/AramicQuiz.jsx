@@ -59,7 +59,8 @@ const AramicQuiz = () => {
   };
 
   const getOptionClass = (index) => {
-    let baseClass = "quiz-option relative p-4 border rounded-lg mb-3 cursor-pointer transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800";
+    // back button floating turned black because of what I did below here to fix correct/wrong answer hard to see
+    let baseClass = "quiz-option text-black dark:text-white relative p-4 border rounded-lg mb-3 cursor-pointer transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800";
     
     if (selectedOption === null) return `${baseClass} text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700`; 
     
@@ -70,7 +71,7 @@ const AramicQuiz = () => {
         return `${baseClass} incorrect bg-red-600 text-white border-red-600`;
       }
     }
-    
+    // correct or wrong answer turns white here 
     if (index === quizData[currentQuestion].correct && showExplanation) {
       return `${baseClass} correct-answer bg-green-600 text-white border-green-600`;
     }

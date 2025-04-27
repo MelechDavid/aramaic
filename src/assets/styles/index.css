@@ -282,11 +282,13 @@ div[data-entry-id][class*="bg-white"] {
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
+  color: black;
 }
 
 .dark .quiz-option {
   background: theme('colors.gray.700');
   border-color: theme('colors.gray.600');
+  color: white;
 }
 
 .quiz-option:hover {
@@ -316,12 +318,14 @@ div[data-entry-id][class*="bg-white"] {
   background: theme('colors.green.100');
   border-color: theme('colors.green.500');
   box-shadow: 0 0 0 3px theme('colors.green.200');
+  color:black;
 }
 
 .dark .quiz-option.correct {
   background: theme('colors.green.900');
   border-color: theme('colors.green.500');
   box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+  color:white;
 }
 
 .quiz-option.incorrect {
@@ -329,12 +333,14 @@ div[data-entry-id][class*="bg-white"] {
   background: theme('colors.red.100');
   border-color: theme('colors.red.500');
   box-shadow: 0 0 0 3px theme('colors.red.200');
+  color:black;
 }
 
 .dark .quiz-option.incorrect {
   background: theme('colors.red.900');
   border-color: theme('colors.red.500');
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+  color:white;
 }
 
 .quiz-explanation {
@@ -443,6 +449,7 @@ div[data-entry-id][class*="bg-white"] {
 
 .dark .aramaic-diagram th {
   background: theme('colors.gray.800');
+  color:white;
 }
 
 .aramaic-diagram tr:nth-child(even) td {
