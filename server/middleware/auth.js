@@ -3,12 +3,17 @@ const User = require('../models/User');
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
+    const authHeader = req.header('Authorization');
+    console.log('🔍 Auth header received:', authHeader ? authHeader.substring(0, 50) + '...' : 'None');
+    
+    const token = authHeader?.replace('Bearer ', '');
     
     if (!token) {
+      console.log('❌ No token provided');
       return res.status(401).json({ message: 'No token provided' });
     }
 
+    console.log('🔍 Token to verify:', token.substring(0, 50) + '...');
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.userId);
     

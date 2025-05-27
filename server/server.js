@@ -8,7 +8,7 @@ const { createTables } = require('./config/init');
 const { validateEnvVars } = require('./utils/helpers');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Initialize database on startup
 const initializeApp = async () => {
@@ -37,13 +37,17 @@ const initializeApp = async () => {
 // Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-vercel-app.vercel.app'] 
+    ? [
+        'https://aramaic-git-backend-melechdavids-projects.vercel.app',
+        'https://aramaic-melechdavids-projects.vercel.app', // Main domain
+        'https://aramaic.vercel.app', // If you have a custom domain
+        /^https:\/\/aramaic-.*\.vercel\.app$/ // Allow any branch preview
+      ]
     : function (origin, callback) {
         // Allow requests with no origin (like mobile apps, Postman, etc.)
         if (!origin) return callback(null, true);
-        
-        // Allow any localhost or 127.0.0.1 on common dev ports
-        const devOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1):(3000|4000|5000|5173|5174|5175|8080|8000)$/;
+          // Allow any localhost or 127.0.0.1 on common dev ports
+        const devOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1):(3000|4000|5000|5001|5173|5174|5175|8080|8000)$/;
         
         if (devOriginPattern.test(origin)) {
           console.log('✅ CORS allowed origin:', origin);
