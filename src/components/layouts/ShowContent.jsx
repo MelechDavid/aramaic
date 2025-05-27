@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import AudioButton from "../buttons/AudioButton";
 import InfiniteScroll from "../ui/InfiniteScroll";
 import EntryDetails from "./EntryDetails";
 

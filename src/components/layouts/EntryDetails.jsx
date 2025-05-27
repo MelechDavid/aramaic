@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, forwardRef } from "react";
+import FavoriteButton from "../buttons/FavoriteButton";
 
-const EntryDetails = ({ entry, onBack, isSlideIn }) => {
+const EntryDetails = forwardRef(({ entry, onBack, isSlideIn }, ref) => {
   if (!entry) return null;
 
   // Disable scrolling on the body when entry details are visible
@@ -66,11 +67,18 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
       </div>
 
       <div className="p-4 max-w-3xl mx-auto">
-        {/* Entry content */}
-        <div className="pt-12 pb-16">
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            {entry.headwords.join(", ")}
-          </h1>
+        {/* Entry content */}        <div className="pt-12 pb-16">
+          <div className="flex items-start justify-between mb-4">
+            <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white flex-1">
+              {entry.headwords.join(", ")}
+            </h1>            <div className="flex items-center gap-2 ml-4">
+              <FavoriteButton 
+                word={entry.headwords.join(", ")}
+                definition={entry.definition || entry.englishTerms.join(", ")}
+                pronunciation={entry.headwords.join(", ")}
+              />
+            </div>
+          </div>
 
           {/* English Terms */}
           <div className="flex flex-wrap gap-2 mb-6">
@@ -101,8 +109,7 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    </div>  );
+});
 
 export default EntryDetails;

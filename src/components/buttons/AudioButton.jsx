@@ -2,19 +2,22 @@ import { useEffect, useState } from "react";
 
 import SoundIcon from "../../assets/svg/sound.svg";
 
-const AudioButton = ({ src }) => {
+const AudioButton = ({ src, text }) => {
     const [audioSrc, setAudioSrc] = useState("");
 
     useEffect(() => {
-        src.find((item) => {
-            if (
-                (item.audio && String(item.audio).endsWith("uk.mp3")) ||
-                String(item.audio).endsWith("us.mp3")
-            ) {
-                setAudioSrc(item.audio);
-            }
-        });
-    }, [audioSrc]);
+        // Only try to find audio if src is provided and is an array
+        if (src && Array.isArray(src)) {
+            src.find((item) => {
+                if (
+                    (item.audio && String(item.audio).endsWith("uk.mp3")) ||
+                    String(item.audio).endsWith("us.mp3")
+                ) {
+                    setAudioSrc(item.audio);
+                }
+            });
+        }
+    }, [src, audioSrc]);
 
     const playAudio = async () => {
         try {

@@ -5,6 +5,8 @@ import BackToTopButton from "./components/ui/BackToTopButton";
 import QuizContextProvider from "./context/QuizContext";
 import QuizModal from "./components/quiz/QuizModal";
 import { useQuizContext } from "./context/QuizContext";
+import { AuthProvider } from "./context/AuthContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
 
 // Component to render the QuizModal with access to context
 const QuizModalContainer = () => {
@@ -15,13 +17,17 @@ const QuizModalContainer = () => {
 const App = () => {
   return (
     <ThemeContextProvider>
-      <QuizContextProvider>
-        <Container>
-          <Card></Card>
-        </Container>
-        <BackToTopButton />
-        <QuizModalContainer />
-      </QuizContextProvider>
+      <AuthProvider>
+        <FavoritesProvider>
+          <QuizContextProvider>
+            <Container>
+              <Card></Card>
+            </Container>
+            <BackToTopButton />
+            <QuizModalContainer />
+          </QuizContextProvider>
+        </FavoritesProvider>
+      </AuthProvider>
     </ThemeContextProvider>
   );
 };
