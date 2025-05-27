@@ -5,28 +5,29 @@ const getApiUrl = () => {
   const mode = import.meta.env.MODE;
   const nodeEnv = import.meta.env.NODE_ENV;
   const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'unknown';
+  const hostname = typeof window !== 'undefined' ? window.location.hostname : 'unknown';
   
   console.log('🔍 Environment Detection:', {
     isDev,
     mode,
     nodeEnv,
     currentOrigin,
+    hostname,
     importMeta: import.meta.env
   });
   
-  // Force production detection if we're on a .vercel.app domain
-  const isVercelDomain = typeof window !== 'undefined' && 
-    (window.location.hostname.includes('.vercel.app') || 
-     window.location.hostname.includes('.vercel.com'));
+  // FORCE production mode if we're NOT on localhost
+  const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
   
-  // Check if we're in development mode (and not on Vercel)
-  if (isDev && !isVercelDomain) {
-    console.log('🔧 Development mode detected, using localhost:5001');
+  // Only use localhost in development AND when actually on localhost
+  if (isDev && isLocalhost) {
+    console.log('🔧 Development mode detected on localhost, using localhost:5001');
     return 'http://localhost:5001';
   }
   
-  // In production or on Vercel, use the same domain
-  console.log('🚀 Production mode detected, using current origin:', currentOrigin);
+  // For everything else (production, Vercel, etc.), use current origin
+  console.log('🚀 Production mode or remote domain detected, using current origin:', currentOrigin);
+  console.warn('🚨 If you see localhost:5000 errors, there may be cached code or another API configuration!');
   return currentOrigin;
 };
 

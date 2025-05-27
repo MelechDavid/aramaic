@@ -27,12 +27,11 @@ const ApiTest = () => {
       alert(`Connection failed: ${error.message}`);
     }
   };
-
   const testHealthEndpoint = async () => {
     try {
       console.log('🏥 Testing health endpoint...');
       
-      const response = await fetch('http://localhost:5000/api/health');
+      const response = await fetch(`${window.location.origin}/api/health`);
       const data = await response.json();
       
       console.log('✅ Health check response:', data);
