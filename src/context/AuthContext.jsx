@@ -27,7 +27,6 @@ export const AuthProvider = ({ children }) => {
     }
     return null;
   });
-
   // Set up axios interceptors
   useEffect(() => {
     if (token) {
@@ -35,7 +34,29 @@ export const AuthProvider = ({ children }) => {
     } else {
       delete axios.defaults.headers.common['Authorization'];
     }
-  }, [token]);  // Verify token on app load
+    
+    // Add request interceptor for debugging
+    const requestInterceptor = axios.interceptors.request.use(
+      (config) => {
+        console.log('🌐 Axios Request:', {
+          url: config.url,
+          baseURL: config.baseURL,
+          fullURL: config.baseURL ? `${config.baseURL}${config.url}` : config.url,
+          method: config.method?.toUpperCase()
+        });
+        return config;
+      },
+      (error) => {
+        console.error('🚨 Axios Request Error:', error);
+        return Promise.reject(error);
+      }
+    );
+    
+    // Cleanup interceptor on unmount
+    return () => {
+      axios.interceptors.request.eject(requestInterceptor);
+    };
+  }, [token]);// Verify token on app load
   useEffect(() => {
     const initializeAuth = async () => {
       if (token) {        try {

@@ -1,13 +1,33 @@
 // API configuration for different environments
-const getApiUrl = () => {  // Check if we're in development mode
-  if (import.meta.env.DEV) {
+const getApiUrl = () => {
+  // More detailed environment detection
+  const isDev = import.meta.env.DEV;
+  const mode = import.meta.env.MODE;
+  const nodeEnv = import.meta.env.NODE_ENV;
+  const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'unknown';
+  
+  console.log('🔍 Environment Detection:', {
+    isDev,
+    mode,
+    nodeEnv,
+    currentOrigin,
+    importMeta: import.meta.env
+  });
+  
+  // Force production detection if we're on a .vercel.app domain
+  const isVercelDomain = typeof window !== 'undefined' && 
+    (window.location.hostname.includes('.vercel.app') || 
+     window.location.hostname.includes('.vercel.com'));
+  
+  // Check if we're in development mode (and not on Vercel)
+  if (isDev && !isVercelDomain) {
     console.log('🔧 Development mode detected, using localhost:5001');
     return 'http://localhost:5001';
   }
   
-  // In production, use the same domain but with /api prefix
-  console.log('🚀 Production mode detected, using current origin:', window.location.origin);
-  return window.location.origin;
+  // In production or on Vercel, use the same domain
+  console.log('🚀 Production mode detected, using current origin:', currentOrigin);
+  return currentOrigin;
 };
 
 export const API_BASE_URL = getApiUrl();
