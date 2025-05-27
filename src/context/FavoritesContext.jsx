@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
-import { API_ENDPOINTS } from '../config/api';
+import { API_ENDPOINTS, API_BASE_URL } from '../config/api';
 
 const FavoritesContext = createContext();
 
@@ -55,24 +55,27 @@ export const FavoritesProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
-  const addFavorite = async (word, definition, pronunciation = '', wordData = {}) => {
+  };  const addToFavorites = async (word, definition, pronunciation = '', wordData = {}) => {
     if (!user || !token) return { success: false, message: 'Please log in to add favorites' };
 
     try {
       console.log('Adding favorite to:', API_ENDPOINTS.FAVORITES.ADD);
+      console.log('Request data:', { word, definition, pronunciation });
+      
       const response = await axios.post(API_ENDPOINTS.FAVORITES.ADD, {
         word,
         definition,
         pronunciation,
-        word_data: wordData,
       }, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
 
-      setFavorites(prev => [...prev, response.data]);
+      console.log('Add favorite response:', response.data);
+      
+      // Update local state
+      setFavorites(prev => [...prev, response.data.favorite]);
       setPagination(prev => ({ 
         ...prev, 
         totalCount: prev.totalCount + 1 
@@ -80,6 +83,7 @@ export const FavoritesProvider = ({ children }) => {
       return { success: true };
     } catch (error) {
       console.error('Error adding favorite:', error);
+      console.error('Error response:', error.response?.data);
       return { 
         success: false, 
         message: error.response?.data?.message || 'Failed to add favorite' 
@@ -87,7 +91,57 @@ export const FavoritesProvider = ({ children }) => {
     }
   };
 
-  const removeFavorite = async (favoriteId) => {
+  const removeFromFavorites = async (word) => {
+    if (!user || !token) return { success: false, message: 'Please log in to remove favorites' };
+
+    try {
+      console.log('Removing favorite by word:', word);
+      
+      // Find the favorite to get its ID
+      const favorite = favorites.find(fav => fav.word === word);
+      if (!favorite) {
+        return { success: false, message: 'Favorite not found' };
+      }
+
+      await axios.delete(API_ENDPOINTS.FAVORITES.REMOVE(favorite.id), {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      setFavorites(prev => prev.filter(fav => fav.word !== word));
+      setPagination(prev => ({ 
+        ...prev, 
+        totalCount: Math.max(0, prev.totalCount - 1) 
+      }));
+      return { success: true };
+    } catch (error) {
+      console.error('Error removing favorite:', error);
+      return { 
+        success: false, 
+        message: error.response?.data?.message || 'Failed to remove favorite' 
+      };
+    }
+  };
+  const checkIsFavorited = async (word) => {
+    if (!user || !token) return false;
+
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/favorites/check/${encodeURIComponent(word)}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      return response.data.isFavorited;
+    } catch (error) {
+      console.error('Error checking favorite status:', error);
+      // Fallback to local state
+      return favorites.some(fav => fav.word === word);
+    }
+  };
+
+  const removeFavoriteById = async (favoriteId) => {
     if (!user || !token) return { success: false, message: 'Please log in to remove favorites' };
 
     try {
@@ -142,23 +196,19 @@ export const FavoritesProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
   const loadMore = async () => {
     // Placeholder for pagination - currently not implemented in backend
     console.log('Load more favorites (not implemented yet)');
-  };
-
-  const removeFavoriteById = async (favoriteId) => {
-    return await removeFavorite(favoriteId);
   };
 
   const value = {
     favorites,
     loading,
     pagination,
-    addFavorite,
-    removeFavorite,
+    addToFavorites,
+    removeFromFavorites,
     removeFavoriteById,
+    checkIsFavorited,
     isFavorite,
     getFavoriteByWord,
     fetchFavorites,

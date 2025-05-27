@@ -2,8 +2,7 @@
   "name": "aramaic",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "scripts": {
+  "type": "module",  "scripts": {
     "dev": "vite",
     "build": "vite build",
     "vercel-build": "vite build",
@@ -11,9 +10,13 @@
     "preview": "vite preview",
     "server": "cd server && npm start",
     "server:dev": "cd server && npm run dev",
+    "server:hybrid": "cd server && node server-hybrid.js",
     "server:setup": "cd server && npm run setup",
     "dev:all": "concurrently \"npm run dev\" \"npm run server:dev\"",
-    "install:server": "cd server && npm install"
+    "dev:hybrid": "concurrently \"npm run dev\" \"npm run server:hybrid\"",
+    "install:server": "cd server && npm install",
+    "vercel:dev": "vercel dev",
+    "vercel:deploy": "vercel --prod"
   },
   "dependencies": {
     "react": "^18.2.0",
