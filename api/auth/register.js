@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../../server/models/User');
-const { validateRegistration } = require('../../server/middleware/validation');
+const User = require('../_shared/User');
 const cors = require('../_shared/cors');
 const { initializeOnce } = require('../_shared/init');
 

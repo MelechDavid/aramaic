@@ -1,6 +1,6 @@
 // CORS configuration for Vercel serverless functions
 const cors = (req, res, next) => {
-  const origin = req.headers.origin;
+  const origin = req.headers?.origin;
   
   const allowedOrigins = process.env.NODE_ENV === 'production' 
     ? [

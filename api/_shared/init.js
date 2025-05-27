@@ -1,7 +1,6 @@
 // Shared initialization for Vercel serverless functions
 require('dotenv').config();
-const { createTables } = require('../../server/config/init');
-const { validateEnvVars } = require('../../server/utils/helpers');
+const { createTables, validateEnvVars } = require('./utils');
 
 let initialized = false;
 

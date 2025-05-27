@@ -1,4 +1,4 @@
-const Favorite = require('../../server/models/Favorite');
+const Favorite = require('../_shared/Favorite');
 const cors = require('../_shared/cors');
 const { initializeOnce } = require('../_shared/init');
 const { authenticateToken } = require('../_shared/auth');

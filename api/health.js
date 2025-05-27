@@ -1,4 +1,4 @@
-const cors = require('../_shared/cors');
+const cors = require('./_shared/cors');
 
 module.exports = async (req, res) => {
   // Handle CORS

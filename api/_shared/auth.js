@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../../server/models/User');
+const User = require('./User');
 
 // Shared auth middleware function for serverless functions
 const authenticateToken = async (req) => {

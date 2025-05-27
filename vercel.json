@@ -7,8 +7,12 @@
       "config": {
         "distDir": "dist"
       }
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
-  ],  "routes": [
+  ],"routes": [
     {
       "src": "/api/auth/register",
       "dest": "/api/auth/register.js"
