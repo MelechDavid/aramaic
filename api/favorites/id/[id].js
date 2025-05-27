@@ -18,12 +18,11 @@ module.exports = async (req, res) => {
   try {
     const user = await authenticateToken(req);
     const { id } = req.query;
-    
-    if (!id) {
+      if (!id) {
       return res.status(400).json({ message: 'ID parameter is required' });
     }
 
-    const deletedFavorite = await Favorite.deleteById(id, user.id);
+    const deletedFavorite = await Favorite.deleteById(user.id, id);
     
     if (!deletedFavorite) {
       return res.status(404).json({ message: 'Favorite not found' });

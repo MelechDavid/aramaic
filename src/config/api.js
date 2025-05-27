@@ -23,7 +23,8 @@ export const API_ENDPOINTS = {
   FAVORITES: {
     GET: `${API_BASE_URL}/api/favorites`,
     ADD: `${API_BASE_URL}/api/favorites`,
-    REMOVE: (id) => `${API_BASE_URL}/api/favorites/${id}`,
+    REMOVE: (id) => `${API_BASE_URL}/api/favorites/id/${id}`,
+    REMOVE_BY_WORD: (word) => `${API_BASE_URL}/api/favorites/${encodeURIComponent(word)}`,
   }
 };
 
