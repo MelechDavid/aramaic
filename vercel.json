@@ -1,6 +1,5 @@
 {
-  "version": 2,
-  "builds": [
+  "version": 2,  "builds": [
     {
       "src": "package.json",
       "use": "@vercel/static-build",
@@ -9,10 +8,18 @@
       }
     },
     {
-      "src": "api/**/*.js",
+      "src": "api/auth.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/favorites.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/health.js",
       "use": "@vercel/node"
     }
-  ],  "routes": [
+  ],"routes": [
     {
       "src": "/api/auth/(register|login|profile|verify)",
       "dest": "/api/auth.js"
