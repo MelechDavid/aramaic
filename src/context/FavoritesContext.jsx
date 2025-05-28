@@ -122,12 +122,11 @@ export const FavoritesProvider = ({ children }) => {
         message: error.response?.data?.message || 'Failed to remove favorite' 
       };
     }
-  };
-  const checkIsFavorited = async (word) => {
+  };  const checkIsFavorited = async (word) => {
     if (!user || !token) return false;
 
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/favorites/check/${encodeURIComponent(word)}`, {
+      const response = await axios.get(API_ENDPOINTS.FAVORITES.CHECK(word), {
         headers: {
           'Authorization': `Bearer ${token}`
         }

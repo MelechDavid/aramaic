@@ -40,12 +40,14 @@ export const API_ENDPOINTS = {
     REGISTER: `${API_BASE_URL}/api/auth/register`,
     LOGOUT: `${API_BASE_URL}/api/auth/logout`,
     VERIFY: `${API_BASE_URL}/api/auth/verify`,
+    PROFILE: `${API_BASE_URL}/api/auth/profile`,
   },
   FAVORITES: {
-    GET: `${API_BASE_URL}/api/favorites`,
-    ADD: `${API_BASE_URL}/api/favorites`,
-    REMOVE: (id) => `${API_BASE_URL}/api/favorites/id/${id}`,
-    REMOVE_BY_WORD: (word) => `${API_BASE_URL}/api/favorites/${encodeURIComponent(word)}`,
+    GET: `${API_BASE_URL}/api/favorites?action=list`,
+    ADD: `${API_BASE_URL}/api/favorites?action=add`,
+    REMOVE: (id) => `${API_BASE_URL}/api/favorites?action=delete&id=${id}`,
+    REMOVE_BY_WORD: (word) => `${API_BASE_URL}/api/favorites?action=delete&word=${encodeURIComponent(word)}`,
+    CHECK: (word) => `${API_BASE_URL}/api/favorites?action=check&word=${encodeURIComponent(word)}`,
   }
 };
 
