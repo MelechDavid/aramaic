@@ -2,8 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import AudioButton from "../buttons/AudioButton";
 import InfiniteScroll from "../ui/InfiniteScroll";
 import EntryDetails from "./EntryDetails";
+import HeartButton from "../buttons/HeartButton";
+import { useFavoritesContext } from "../../context/FavoritesContext";
 
 const ShowContent = ({ data, hasMore, loading, onLoadMore, totalResults, expandedEntries, toggleEntry }) => {
+    const { addRecentEntry } = useFavoritesContext();
     const [selectedEntry, setSelectedEntry] = useState(null);
     const [slideAnimation, setSlideAnimation] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +21,9 @@ const ShowContent = ({ data, hasMore, loading, onLoadMore, totalResults, expande
     const handleEntryClick = (entryId, entry) => {
         // If already loading an entry, don't process additional clicks
         if (isLoading) return;
+
+        // Record in recent history
+        addRecentEntry({ id: entryId, headwords: entry.headwords, englishTerms: entry.englishTerms });
         
         // Mark that we're loading an entry
         setIsLoading(true);
@@ -111,9 +117,13 @@ const ShowContent = ({ data, hasMore, loading, onLoadMore, totalResults, expande
                                 {/* Compact View */}
                                 <div className="flex flex-col">
                                     <div className="flex justify-between items-start">
-                                        <h2 className="text-2xl lg:text-3xl font-semibold dark:text-white">
+                                        <h2 className="text-2xl lg:text-3xl font-semibold dark:text-white flex-1 mr-2">
                                             {entry.headwords.join(", ")}
                                         </h2>
+                                        <HeartButton
+                                            entry={{ id: entryId, headwords: entry.headwords, englishTerms: entry.englishTerms }}
+                                            className="flex-shrink-0"
+                                        />
                                     </div>
                                     
                                     {/* English Terms */}

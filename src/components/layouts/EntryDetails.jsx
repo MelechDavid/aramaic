@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import HeartButton from "../buttons/HeartButton";
 
 const EntryDetails = ({ entry, onBack, isSlideIn }) => {
   if (!entry) return null;
@@ -63,6 +64,12 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
             />
           </svg>
         </button>
+        <div className="absolute top-4 right-4 pointer-events-auto">
+          <HeartButton
+            entry={entry}
+            className="bg-white dark:bg-gray-800 shadow-md rounded-full"
+          />
+        </div>
       </div>
 
       <div className="p-4 max-w-3xl mx-auto">

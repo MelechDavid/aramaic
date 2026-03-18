@@ -6,6 +6,7 @@ import NotFound from "./NotFound";
 import SearchForm from "./SearchForm";
 import ShowContent from "./ShowContent";
 import Loader from "../ui/Loader";
+import RecentEntries from "./RecentEntries";
 
 const Card = () => {
     const { 
@@ -44,9 +45,7 @@ const Card = () => {
                 />
                 
                 {!searchTerm ? (
-                    <div className="my-16 text-center text-black dark:text-gray-400">
-                        <p>Type Aramaic or English words to search the Jastrow Talmud Dictionary</p>
-                    </div>
+                    <RecentEntries toggleEntry={toggleEntry} expandedEntries={expandedEntries} />
                 ) : fetchLoading && !data.length ? (
                     <Loader />
                 ) : data && data.length > 0 ? (
