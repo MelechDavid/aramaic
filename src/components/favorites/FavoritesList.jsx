@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFavoritesContext } from '../../context/FavoritesContext';
 
-const FavoritesList = () => {
+const FavoritesList = ({ onEntryClick }) => {
   const { favorites, removeFavorite } = useFavoritesContext();
 
   if (favorites.length === 0) {
@@ -21,7 +21,8 @@ const FavoritesList = () => {
       {favorites.map((entry) => (
         <div
           key={entry.id}
-          className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl"
+          className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl cursor-pointer active:opacity-70"
+          onClick={() => onEntryClick && onEntryClick(entry)}
         >
           <div className="min-w-0 flex-1">
             <p className="font-semibold text-gray-900 dark:text-white truncate">
@@ -44,7 +45,7 @@ const FavoritesList = () => {
             </div>
           </div>
           <button
-            onClick={() => removeFavorite(entry.id)}
+            onClick={(e) => { e.stopPropagation(); removeFavorite(entry.id); }}
             aria-label="Remove from favorites"
             className="ml-3 p-2 text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors flex-shrink-0"
           >

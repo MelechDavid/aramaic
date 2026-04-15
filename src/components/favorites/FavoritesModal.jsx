@@ -1,14 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFavoritesContext } from '../../context/FavoritesContext';
 import FavoritesList from './FavoritesList';
 import FlashcardView from './FlashcardView';
 import FavoritesQuiz from './FavoritesQuiz';
+import EntryDetails from '../layouts/EntryDetails';
+import dictionaryIndex from '../../utils/DictionaryIndex';
 
 const TABS = ['List', 'Flashcards', 'Quiz'];
 
 const FavoritesModal = () => {
   const { isFavoritesOpen, closeFavorites } = useFavoritesContext();
   const [activeTab, setActiveTab] = useState('List');
+  const [selectedEntry, setSelectedEntry] = useState(null);
+  const [slideAnimation, setSlideAnimation] = useState(false);
+  const [isLoadingEntry, setIsLoadingEntry] = useState(false);
+  const pendingEntryRef = useRef(null);
+
+  const handleEntryClick = async (entry) => {
+    if (isLoadingEntry) return;
+    setIsLoadingEntry(true);
+    pendingEntryRef.current = entry;
+    setSelectedEntry({ ...entry, definition: 'Loading...' });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setSlideAnimation(true);
+      });
+    });
+    try {
+      const details = await dictionaryIndex.getEntryDetails(entry.id);
+      if (pendingEntryRef.current?.id === entry.id) {
+        setSelectedEntry(prev => ({ ...prev, ...details }));
+      }
+    } catch (err) {
+      console.error('Error loading entry details:', err);
+    } finally {
+      setIsLoadingEntry(false);
+    }
+  };
+
+  const handleEntryBack = () => {
+    setSlideAnimation(false);
+    setTimeout(() => {
+      setSelectedEntry(null);
+      pendingEntryRef.current = null;
+    }, 300);
+  };
 
   useEffect(() => {
     if (isFavoritesOpen) {
@@ -84,10 +120,17 @@ const FavoritesModal = () => {
       </div>
 
       <div className="p-4 max-w-3xl mx-auto pb-16">
-        {activeTab === 'List' && <FavoritesList />}
+        {activeTab === 'List' && <FavoritesList onEntryClick={handleEntryClick} />}
         {activeTab === 'Flashcards' && <FlashcardView />}
         {activeTab === 'Quiz' && <FavoritesQuiz />}
       </div>
+
+      <EntryDetails
+        entry={selectedEntry}
+        onBack={handleEntryBack}
+        isSlideIn={slideAnimation}
+        skipScrollLock={true}
+      />
     </div>
   );
 };

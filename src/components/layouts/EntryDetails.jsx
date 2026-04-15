@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import HeartButton from "../buttons/HeartButton";
 
-const EntryDetails = ({ entry, onBack, isSlideIn }) => {
+const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
   if (!entry) return null;
 
   // Disable scrolling on the body when entry details are visible
   useEffect(() => {
+    if (skipScrollLock) return;
     if (isSlideIn) {
       // Lock main body scrolling when entry is open
       document.body.classList.add('entry-details-open');
@@ -25,6 +26,7 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
     }
     
     return () => {
+      if (skipScrollLock) return;
       // Cleanup in case component unmounts 
       document.body.classList.remove('entry-details-open');
       document.body.style.overflow = '';
@@ -32,18 +34,18 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
       document.body.style.width = '';
       document.body.style.top = '';
     };
-  }, [isSlideIn]);
+  }, [isSlideIn, skipScrollLock]);
 
   // Use different classes - start from the right side when opening
   const slideClass = isSlideIn ? 'translate-x-0' : 'translate-x-full';
 
   return (
     <div 
-      className={`fixed inset-0 bg-white dark:bg-gray-900 z-50 overflow-y-auto transform transition-transform duration-300 ease-in-out ${slideClass}`}
+      className={`fixed inset-0 bg-white dark:bg-gray-900 z-[60] overflow-y-auto transform transition-transform duration-300 ease-in-out ${slideClass}`}
       style={{ willChange: 'transform' }}
     >
       {/* Fixed header with back button that stays visible when scrolling */}
-      <div className="sticky top-0 left-0 z-[51] bg-gradient-to-b from-white dark:from-gray-900 to-transparent pb-8 pointer-events-none" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+      <div className="sticky top-0 left-0 z-[61] bg-gradient-to-b from-white dark:from-gray-900 to-transparent pb-8 pointer-events-none" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <button
           onClick={onBack}
           className="absolute left-4 p-2 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all hover:scale-110 pointer-events-auto"
