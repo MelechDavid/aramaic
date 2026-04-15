@@ -43,10 +43,11 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
       style={{ willChange: 'transform' }}
     >
       {/* Fixed header with back button that stays visible when scrolling */}
-      <div className="sticky top-0 left-0 z-[51] bg-gradient-to-b from-white dark:from-gray-900 to-transparent pt-4 pb-8 pointer-events-none">
+      <div className="sticky top-0 left-0 z-[51] bg-gradient-to-b from-white dark:from-gray-900 to-transparent pb-8 pointer-events-none" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <button
           onClick={onBack}
-          className="absolute top-4 left-4 p-2 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all hover:scale-110 pointer-events-auto"
+          className="absolute left-4 p-2 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all hover:scale-110 pointer-events-auto"
+          style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}
           aria-label="Back to search results"
         >
           <svg
@@ -64,7 +65,7 @@ const EntryDetails = ({ entry, onBack, isSlideIn }) => {
             />
           </svg>
         </button>
-        <div className="absolute top-4 right-4 pointer-events-auto">
+        <div className="absolute right-4 pointer-events-auto" style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}>
           <HeartButton
             entry={entry}
             className="bg-white dark:bg-gray-800 shadow-md rounded-full"

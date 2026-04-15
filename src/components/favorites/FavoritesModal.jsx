@@ -45,7 +45,7 @@ const FavoritesModal = () => {
       style={{ willChange: 'transform' }}
     >
       {/* Sticky header */}
-      <div className="sticky top-0 left-0 z-[51] bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+      <div className="sticky top-0 left-0 z-[51] bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="flex items-center gap-3 p-4">
           <button
             onClick={closeFavorites}

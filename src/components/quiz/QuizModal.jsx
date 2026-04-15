@@ -43,10 +43,11 @@ const QuizModal = ({ isOpen, onClose }) => {
       style={{ willChange: 'transform' }}
     >
       {/* Back button to close the quiz */}
-      <div className="sticky top-0 left-0 z-[51] bg-gradient-to-b from-white dark:from-gray-900 to-transparent pt-4 pb-8 pointer-events-none">
+      <div className="sticky top-0 left-0 z-[51] bg-gradient-to-b from-white dark:from-gray-900 to-transparent pb-8 pointer-events-none" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <button
           onClick={onClose}
-          className="absolute top-4 left-4 p-2 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all hover:scale-110 pointer-events-auto"
+          className="absolute left-4 p-2 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all hover:scale-110 pointer-events-auto"
+          style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}
           aria-label="Back to dictionary"
         >
           <svg

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useFavoritesContext } from '../../context/FavoritesContext';
 import EntryDetails from './EntryDetails';
+import HeartButton from '../buttons/HeartButton';
 
 const RecentEntries = ({ toggleEntry, expandedEntries }) => {
   const { recentEntries } = useFavoritesContext();
@@ -67,9 +68,12 @@ const RecentEntries = ({ toggleEntry, expandedEntries }) => {
               }`}
               onClick={() => handleEntryClick(entry)}
             >
-              <h3 className="text-xl font-semibold dark:text-white">
-                {entry.headwords.join(', ')}
-              </h3>
+              <div className="flex justify-between items-start">
+                <h3 className="text-xl font-semibold dark:text-white flex-1 mr-2">
+                  {entry.headwords.join(', ')}
+                </h3>
+                <HeartButton entry={entry} className="flex-shrink-0" />
+              </div>
               <div className="flex flex-wrap gap-2 mt-2">
                 {entry.englishTerms.map((term, i) => (
                   <span

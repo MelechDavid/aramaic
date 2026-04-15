@@ -8,8 +8,8 @@ const Header = () => {
     const { openFavorites, favorites } = useFavoritesContext();
 
     return (
-<header style={{ padding: '0px'  }}>
-    <div className="dark:bg-black bg-white">
+<header className="dark:bg-black bg-white" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+    <div>
 <div className="flex justify-between w-full p-3 px-4 md:p-4 md:px-5 rounded-lg bg-gray-100 dark:bg-gray-900">
                 <Logo />
                 <GrammarButton />
