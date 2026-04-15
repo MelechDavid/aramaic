@@ -1,11 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import HeartButton from "../buttons/HeartButton";
+import ConjugationButton from "../buttons/ConjugationButton";
+import ConjugationModal from "../conjugation/ConjugationModal";
+import { getAvailableBinyanim, extractRoot } from "../../utils/AramaicConjugation";
 
 const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
-  if (!entry) return null;
+  const [showConjugation, setShowConjugation] = useState(false);
+
+  // Check if this entry has Aramaic conjugation data available
+  const hasConjugation = useMemo(() => {
+    if (!entry || !entry.isAramaic || !entry.headwords) return false;
+    const root = extractRoot(entry.headwords[0]);
+    if (!root) return false;
+    const available = getAvailableBinyanim(entry.binyanim || [], entry.isAramaic);
+    return available.length > 0;
+  }, [entry]);
 
   // Disable scrolling on the body when entry details are visible
   useEffect(() => {
+    if (!entry) return;
     if (skipScrollLock) return;
     if (isSlideIn) {
       // Lock main body scrolling when entry is open
@@ -34,7 +47,9 @@ const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
       document.body.style.width = '';
       document.body.style.top = '';
     };
-  }, [isSlideIn, skipScrollLock]);
+  }, [entry, isSlideIn, skipScrollLock]);
+
+  if (!entry) return null;
 
   // Use different classes - start from the right side when opening
   const slideClass = isSlideIn ? 'translate-x-0' : 'translate-x-full';
@@ -67,7 +82,13 @@ const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
             />
           </svg>
         </button>
-        <div className="absolute right-4 pointer-events-auto" style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}>
+        <div className="absolute right-4 flex items-center gap-2 pointer-events-auto" style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}>
+          {hasConjugation && (
+            <ConjugationButton
+              onClick={() => setShowConjugation(true)}
+              className="bg-white dark:bg-gray-800 shadow-md rounded-full"
+            />
+          )}
           <HeartButton
             entry={entry}
             className="bg-white dark:bg-gray-800 shadow-md rounded-full"
@@ -111,6 +132,14 @@ const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
           </div>
         </div>
       </div>
+
+      {/* Conjugation Modal */}
+      {showConjugation && hasConjugation && (
+        <ConjugationModal
+          entry={entry}
+          onClose={() => setShowConjugation(false)}
+        />
+      )}
     </div>
   );
 };

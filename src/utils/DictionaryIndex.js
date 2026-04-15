@@ -434,7 +434,22 @@ class DictionaryIndex {
       
       // Process complete entry data
       const completeDefinition = processEntryContent(entry);
-      
+
+      // Detect if entry is Aramaic (Chaldean)
+      const languageKey = entry.querySelector('language-key');
+      const isAramaic = languageKey ? /\bch\.?\b/i.test(languageKey.textContent) : false;
+
+      // Extract binyan information
+      const binyanElements = entry.querySelectorAll('binyan');
+      const binyanim = Array.from(binyanElements).map(b => {
+        const nameEl = b.querySelector('binyan-name');
+        const formEl = b.querySelector('binyan-form');
+        return {
+          name: nameEl ? nameEl.textContent.trim() : '',
+          form: formEl ? formEl.textContent.trim() : '',
+        };
+      }).filter(b => b.name);
+
       // Extract separate notes section (for backward compatibility)
       const notes = Array.from(entry.querySelectorAll('sense notes'))
           .map(note => {
@@ -460,7 +475,9 @@ class DictionaryIndex {
         headwords,
         englishTerms,
         definition: completeDefinition,
-        notes: notes
+        notes: notes,
+        isAramaic,
+        binyanim,
       };
       
       // Cache the details for future use
