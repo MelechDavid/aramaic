@@ -9,9 +9,15 @@ class DictionaryIndex {
     this.entryDetailsCache = {}; // Add a cache for entry details
   }
 
-  // Remove vowel marks (nikkud) from Aramaic/Hebrew text
+  // Remove vowel marks (nikkud) and normalize Hebrew final forms (sofit letters)
   removeVowels(text) {
-    return text.replace(/[\u0591-\u05C7]/g, '');
+    return text
+      .replace(/[\u0591-\u05C7]/g, '') // strip nikkud
+      .replace(/\u05DA/g, '\u05DB')    // ך → כ (kaf sofit)
+      .replace(/\u05DD/g, '\u05DE')    // ם → מ (mem sofit)
+      .replace(/\u05DF/g, '\u05E0')    // ן → נ (nun sofit)
+      .replace(/\u05E3/g, '\u05E4')    // ף → פ (pe sofit)
+      .replace(/\u05E5/g, '\u05E6');   // ץ → צ (tsadi sofit)
   }
 
   // Load and pre-process the XML file
