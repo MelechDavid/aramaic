@@ -83,42 +83,41 @@ class DictionaryIndex {
     let score = 0;
     
     if (isHebrewSearch) {
-      // Check headwords for exact matches
+      // Take the best score from any single headword (don't accumulate across headwords,
+      // which would let multi-headword entries with weak matches outscore exact matches)
+      let highestScore = 0;
+
       for (let i = 0; i < entry.headwords.length; i++) {
-        const hw = entry.headwords[i].toLowerCase();
         const hwNormalized = entry.headwordsNormalized[i];
-        
-        // Exact match gets highest score
-        if (hw === searchTerm) {
-          score += 100;
-        } 
-        // Starts with the search term
-        else if (hw.startsWith(searchTerm)) {
-          score += 80;
-        }
-        // Contains the search term as a whole word
-        else if (hw.includes(` ${searchTerm}`) || hw.includes(`${searchTerm} `)) {
-          score += 60;
-        }
-        // Contains the search term anywhere
-        else if (hw.includes(searchTerm)) {
-          score += 40;
-        }
-        
-        // Same checks for normalized (no vowels) version
+        let hwScore = 0;
+
         if (hwNormalized === termWithoutVowels) {
-          score += 90;
+          // Tier 1: exact match
+          hwScore = 1000;
+        } else if (
+          hwNormalized.startsWith(termWithoutVowels) &&
+          hwNormalized.length === termWithoutVowels.length + 1
+        ) {
+          // Tier 2: exactly one extra letter appended to the end
+          hwScore = 800;
+        } else if (hwNormalized.startsWith(termWithoutVowels)) {
+          // Tier 3: starts with the term (two or more extra letters)
+          hwScore = 600;
+        } else if (
+          hwNormalized.includes(` ${termWithoutVowels}`) ||
+          hwNormalized.includes(`${termWithoutVowels} `)
+        ) {
+          // Tier 4: term appears as a whole word within a multi-word headword
+          hwScore = 300;
+        } else if (hwNormalized.includes(termWithoutVowels)) {
+          // Tier 5: term appears embedded anywhere inside a longer word
+          hwScore = 100;
         }
-        else if (hwNormalized.startsWith(termWithoutVowels)) {
-          score += 70;
-        }
-        else if (hwNormalized.includes(` ${termWithoutVowels}`) || hwNormalized.includes(`${termWithoutVowels} `)) {
-          score += 50;
-        }
-        else if (hwNormalized.includes(termWithoutVowels)) {
-          score += 30;
-        }
+
+        highestScore = Math.max(highestScore, hwScore);
       }
+
+      score += highestScore;
     } else {
       // Enhanced English search with stronger word boundary prioritization
       
