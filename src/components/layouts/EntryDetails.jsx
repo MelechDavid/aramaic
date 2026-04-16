@@ -56,7 +56,7 @@ const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
 
   return (
     <div 
-      className={`fixed inset-0 bg-white dark:bg-gray-900 z-[60] overflow-y-auto transform transition-transform duration-300 ease-in-out ${slideClass}`}
+      className={`fixed inset-0 bg-white dark:bg-gray-900 z-[60] ${showConjugation ? 'overflow-hidden' : 'overflow-y-auto'} transform transition-transform duration-300 ease-in-out ${slideClass}`}
       style={{ willChange: 'transform' }}
     >
       {/* Fixed header with back button that stays visible when scrolling */}

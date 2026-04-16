@@ -72,7 +72,7 @@ const ConjugationModal = ({ entry, onClose }) => {
       }`}
     >
       {/* Header */}
-      <div className="sticky top-0 z-10 flex items-center px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-pink-600 to-pink-700">
+      <div className="sticky top-0 z-10 flex items-center px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-pink-600 to-pink-700" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 0.75rem)' }}>
         <button
           onClick={handleBack}
           className="p-1.5 rounded-full hover:bg-white/20 transition-colors text-white"
