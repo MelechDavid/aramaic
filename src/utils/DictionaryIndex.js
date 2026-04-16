@@ -438,6 +438,7 @@ class DictionaryIndex {
       // Detect if entry is Aramaic (Chaldean)
       const languageKey = entry.querySelector('language-key');
       const isAramaic = languageKey ? /\bch\.?\b/i.test(languageKey.textContent) : false;
+      const isHebrew = languageKey ? /b\.\s*h\./i.test(languageKey.textContent) : false;
 
       // Extract binyan information
       const binyanElements = entry.querySelectorAll('binyan');
@@ -477,6 +478,7 @@ class DictionaryIndex {
         definition: completeDefinition,
         notes: notes,
         isAramaic,
+        isHebrew,
         binyanim,
       };
       

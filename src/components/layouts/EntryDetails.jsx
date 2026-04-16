@@ -7,12 +7,12 @@ import { getAvailableBinyanim, extractRoot } from "../../utils/AramaicConjugatio
 const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
   const [showConjugation, setShowConjugation] = useState(false);
 
-  // Check if this entry has Aramaic conjugation data available
+  // Check if this entry has conjugation data available (Aramaic or Hebrew)
   const hasConjugation = useMemo(() => {
-    if (!entry || !entry.isAramaic || !entry.headwords) return false;
+    if (!entry || (!entry.isAramaic && !entry.isHebrew) || !entry.headwords) return false;
     const root = extractRoot(entry.headwords[0]);
     if (!root) return false;
-    const available = getAvailableBinyanim(entry.binyanim || [], entry.isAramaic);
+    const available = getAvailableBinyanim(entry.binyanim || [], entry.isAramaic, entry.isHebrew);
     return available.length > 0;
   }, [entry]);
 
