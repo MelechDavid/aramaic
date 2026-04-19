@@ -117,7 +117,7 @@ const ShowContent = ({ data, hasMore, loading, onLoadMore, totalResults, expande
                                 {/* Compact View */}
                                 <div className="flex flex-col">
                                     <div className="flex justify-between items-start">
-                                        <h2 className="text-2xl lg:text-3xl font-semibold dark:text-white flex-1 mr-2">
+                                        <h2 dir="rtl" className="text-2xl lg:text-3xl font-semibold dark:text-white flex-1 mr-2">
                                             {entry.headwords.join(", ")}
                                         </h2>
                                         <HeartButton

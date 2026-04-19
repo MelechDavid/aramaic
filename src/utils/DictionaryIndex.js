@@ -311,10 +311,24 @@ class DictionaryIndex {
             switch (tagName) {
               case 'entry':
                 // Process main entry content
+                // Wrap headwords in RTL span so they display in the same order as the title
+                let headwordsHtml = '';
+                let contentHtml = '';
+                let pastHeadwords = false;
                 for (let child of node.childNodes) {
-                  text += processNode(child);
+                  if (!pastHeadwords) {
+                    const isHW = child.nodeType === Node.ELEMENT_NODE && child.tagName.toLowerCase() === 'head-word';
+                    const isHWNum = child.nodeType === Node.ELEMENT_NODE && child.tagName.toLowerCase() === 'hw-number';
+                    const isWhitespace = child.nodeType === Node.TEXT_NODE && child.textContent.trim() === '';
+                    if (isHW || isHWNum || isWhitespace) {
+                      headwordsHtml += processNode(child);
+                      continue;
+                    }
+                    pastHeadwords = true;
+                  }
+                  contentHtml += processNode(child);
                 }
-                return text;
+                return (headwordsHtml ? `<span dir="rtl">${headwordsHtml}</span>` : '') + contentHtml;
               
               case 'head-word':
                 // Main entry headword - format prominently

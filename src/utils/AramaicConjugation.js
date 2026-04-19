@@ -87,6 +87,17 @@ function isLamedHey(root) {
 }
 
 /**
+ * Detect lamed-aleph (ל"א) verbs where R3 is aleph (א) or yud (י).
+ * In Aramaic, III-א roots often show א↔י alternation.
+ * These verbs follow special patterns where the aleph quiesces
+ * and yud-based endings appear.
+ */
+function isLamedAleph(root) {
+  if (!root || root.length < 3) return false;
+  return root[2] === '\u05D0' || root[2] === '\u05D9'; // aleph or yud
+}
+
+/**
  * Extract the consonantal root from a headword by stripping nikkud.
  * Converts final-form (sofit) letters to their regular form for conjugation.
  */
@@ -962,6 +973,251 @@ const LAMED_HEY_TEMPLATES = {
   nitpael: NITPAEL_LH,
 };
 
+// ============================================================
+// ARAMAIC LAMED-ALEPH (ל"א) CONJUGATION TEMPLATES
+// For verbs where R3 is aleph (א) or yud (י).
+// The aleph quiesces; yud-based endings replace R3.
+// Only R1 (r[0]) and R2 (r[1]) appear as consonants.
+// ============================================================
+
+// Pe'al lamed-aleph
+const PEAL_LA = {
+  past: [
+    { person: '3ms', form: (r) => `${r[0]}\u05B0${r[1]}\u05B8\u05D0` },
+    { person: '3fs', form: (r) => `${r[0]}\u05B0${r[1]}\u05B8\u05D0\u05B7\u05EA` },
+    { person: '2ms', form: (r) => `${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA` },
+    { person: '2fs', form: (r) => `${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05B4\u05D9` },
+    { person: '1cs', form: (r) => `${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA` },
+    { person: '3cp', form: (r) => `${r[0]}\u05B0${r[1]}\u05D5\u05B9` },
+    { person: '2mp', form: (r) => `${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05B5\u05D9\u05DF` },
+    { person: '1cp', form: (r) => `${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05E0\u05B8\u05D0` },
+  ],
+  future: [
+    { person: '3ms', form: (r) => `\u05D9\u05B4${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05EA\u05BC\u05B4${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2ms', form: (r) => `\u05EA\u05BC\u05B4${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `\u05EA\u05BC\u05B4${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05DF` },
+    { person: '1cs', form: (r) => `\u05D0\u05B6${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3cp', form: (r) => `\u05D9\u05B4${r[0]}\u05B0${r[1]}\u05D5\u05BC\u05DF` },
+    { person: '2mp', form: (r) => `\u05EA\u05BC\u05B4${r[0]}\u05B0${r[1]}\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05EA\u05BC\u05B4${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+    { person: '1cp', form: (r) => `\u05E0\u05B4${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+  ],
+  imperative: [
+    { person: '2ms', form: (r) => `${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `${r[0]}\u05B0${r[1]}\u05B8\u05D0\u05B4\u05D9` },
+    { person: '2mp', form: (r) => `${r[0]}\u05B0${r[1]}\u05D5\u05B9` },
+    { person: '2fp', form: (r) => `${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+  ],
+  activeParticiple: [
+    { person: 'ms', form: (r) => `${r[0]}\u05B8${r[1]}\u05B5\u05D9` },
+    { person: 'fs', form: (r) => `${r[0]}\u05B8${r[1]}\u05B0\u05D9\u05B8\u05D0` },
+    { person: 'mp', form: (r) => `${r[0]}\u05B8${r[1]}\u05B5\u05D9\u05DF` },
+    { person: 'fp', form: (r) => `${r[0]}\u05B8${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+  ],
+  passiveParticiple: [
+    { person: 'ms', form: (r) => `${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: 'fs', form: (r) => `${r[0]}\u05B0${r[1]}\u05B7\u05D9\u05BC\u05B8\u05D0` },
+    { person: 'mp', form: (r) => `${r[0]}\u05B0${r[1]}\u05B7\u05D9\u05B4\u05D9\u05DF` },
+    { person: 'fp', form: (r) => `${r[0]}\u05B0${r[1]}\u05B7\u05D9\u05BC\u05B8\u05DF` },
+  ],
+};
+
+// Pa'el lamed-aleph
+const PAEL_LA = {
+  past: [
+    { person: '3ms', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B7\u05EA` },
+    { person: '2ms', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA` },
+    { person: '2fs', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA\u05B4\u05D9` },
+    { person: '1cs', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA` },
+    { person: '3cp', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05D5\u05BC` },
+    { person: '2mp', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA\u05B5\u05D9\u05DF` },
+    { person: '1cp', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05E0\u05B8\u05D0` },
+  ],
+  future: [
+    { person: '3ms', form: (r) => `\u05D9\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05EA\u05BC\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '2ms', form: (r) => `\u05EA\u05BC\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `\u05EA\u05BC\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05DF` },
+    { person: '1cs', form: (r) => `\u05D0\u05B2${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '3cp', form: (r) => `\u05D9\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05D5\u05BC\u05DF` },
+    { person: '2mp', form: (r) => `\u05EA\u05BC\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05EA\u05BC\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B8\u05DF` },
+    { person: '1cp', form: (r) => `\u05E0\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+  ],
+  imperative: [
+    { person: '2ms', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B4\u05D9` },
+    { person: '2mp', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05D5\u05B9` },
+    { person: '2fp', form: (r) => `${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B8\u05DF` },
+  ],
+  activeParticiple: [
+    { person: 'ms', form: (r) => `\u05DE\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: 'fs', form: (r) => `\u05DE\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B8\u05D0` },
+    { person: 'mp', form: (r) => `\u05DE\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05DF` },
+    { person: 'fp', form: (r) => `\u05DE\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B8\u05DF` },
+  ],
+};
+
+// Af'el lamed-aleph
+const AFEL_LA = {
+  past: [
+    { person: '3ms', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B7\u05EA` },
+    { person: '2ms', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA` },
+    { person: '2fs', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05B4\u05D9` },
+    { person: '1cs', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA` },
+    { person: '3cp', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05D5\u05B9` },
+    { person: '2mp', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05B5\u05D9\u05DF` },
+    { person: '1cp', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05E0\u05B8\u05D0` },
+  ],
+  future: [
+    { person: '3ms', form: (r) => `\u05D9\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2ms', form: (r) => `\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05DF` },
+    { person: '1cs', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3cp', form: (r) => `\u05D9\u05B7${r[0]}\u05B0${r[1]}\u05D5\u05BC\u05DF` },
+    { person: '2mp', form: (r) => `\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+    { person: '1cp', form: (r) => `\u05E0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+  ],
+  imperative: [
+    { person: '2ms', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B4\u05D9` },
+    { person: '2mp', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05D5\u05B9` },
+    { person: '2fp', form: (r) => `\u05D0\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+  ],
+  activeParticiple: [
+    { person: 'ms', form: (r) => `\u05DE\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: 'fs', form: (r) => `\u05DE\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05D0` },
+    { person: 'mp', form: (r) => `\u05DE\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05DF` },
+    { person: 'fp', form: (r) => `\u05DE\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+  ],
+};
+
+// Ithpe'el lamed-aleph
+const ITHPEEL_LA = {
+  past: [
+    { person: '3ms', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B7\u05EA` },
+    { person: '2ms', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA` },
+    { person: '2fs', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05B4\u05D9` },
+    { person: '1cs', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA` },
+    { person: '3cp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05D5\u05B9` },
+    { person: '2mp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05B5\u05D9\u05DF` },
+    { person: '1cp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05E0\u05B8\u05D0` },
+  ],
+  future: [
+    { person: '3ms', form: (r) => `\u05D9\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2ms', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05DF` },
+    { person: '1cs', form: (r) => `\u05D0\u05B6\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3cp', form: (r) => `\u05D9\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05D5\u05BC\u05DF` },
+    { person: '2mp', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+    { person: '1cp', form: (r) => `\u05E0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+  ],
+  imperative: [
+    { person: '2ms', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B4\u05D9` },
+    { person: '2mp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05D5\u05B9` },
+    { person: '2fp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+  ],
+  activeParticiple: [
+    { person: 'ms', form: (r) => `\u05DE\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: 'fs', form: (r) => `\u05DE\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05D0` },
+    { person: 'mp', form: (r) => `\u05DE\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05DF` },
+    { person: 'fp', form: (r) => `\u05DE\u05B4\u05EA\u05B0${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+  ],
+};
+
+// Ithpa'al lamed-aleph
+const ITHPAAL_LA = {
+  past: [
+    { person: '3ms', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B7\u05EA` },
+    { person: '2ms', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA` },
+    { person: '2fs', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA\u05B4\u05D9` },
+    { person: '1cs', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA` },
+    { person: '3cp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05D5\u05BC` },
+    { person: '2mp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05EA\u05B5\u05D9\u05DF` },
+    { person: '1cp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05E0\u05B8\u05D0` },
+  ],
+  future: [
+    { person: '3ms', form: (r) => `\u05D9\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '2ms', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05DF` },
+    { person: '1cs', form: (r) => `\u05D0\u05B6\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '3cp', form: (r) => `\u05D9\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05D5\u05BC\u05DF` },
+    { person: '2mp', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B8\u05DF` },
+    { person: '1cp', form: (r) => `\u05E0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+  ],
+  imperative: [
+    { person: '2ms', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B4\u05D9` },
+    { person: '2mp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05D5\u05BC` },
+    { person: '2fp', form: (r) => `\u05D0\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B8\u05DF` },
+  ],
+  activeParticiple: [
+    { person: 'ms', form: (r) => `\u05DE\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9` },
+    { person: 'fs', form: (r) => `\u05DE\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B8\u05D0` },
+    { person: 'mp', form: (r) => `\u05DE\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B5\u05D9\u05DF` },
+    { person: 'fp', form: (r) => `\u05DE\u05B4\u05EA\u05B0${r[0]}\u05B7${r[1]}\u05BC\u05B0\u05D9\u05B8\u05DF` },
+  ],
+};
+
+// Ittaf'al lamed-aleph
+const ITTAFAL_LA = {
+  past: [
+    { person: '3ms', form: (r) => `\u05D0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05D0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B7\u05EA` },
+    { person: '2ms', form: (r) => `\u05D0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA` },
+    { person: '2fs', form: (r) => `\u05D0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05B4\u05D9` },
+    { person: '1cs', form: (r) => `\u05D0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA` },
+    { person: '3cp', form: (r) => `\u05D0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05D5\u05B9` },
+    { person: '2mp', form: (r) => `\u05D0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05D0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05EA\u05B5\u05D9\u05DF` },
+    { person: '1cp', form: (r) => `\u05D0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05E0\u05B8\u05D0` },
+  ],
+  future: [
+    { person: '3ms', form: (r) => `\u05D9\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3fs', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2ms', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '2fs', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05DF` },
+    { person: '1cs', form: (r) => `\u05D0\u05B6\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: '3cp', form: (r) => `\u05D9\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05D5\u05BC\u05DF` },
+    { person: '2mp', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05D5\u05BC\u05DF` },
+    { person: '2fp', form: (r) => `\u05EA\u05BC\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+    { person: '1cp', form: (r) => `\u05E0\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+  ],
+  activeParticiple: [
+    { person: 'ms', form: (r) => `\u05DE\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9` },
+    { person: 'fs', form: (r) => `\u05DE\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05D0` },
+    { person: 'mp', form: (r) => `\u05DE\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B5\u05D9\u05DF` },
+    { person: 'fp', form: (r) => `\u05DE\u05B4\u05EA\u05BC\u05B7${r[0]}\u05B0${r[1]}\u05B0\u05D9\u05B8\u05DF` },
+  ],
+};
+
+// Map of Aramaic binyan keys to their lamed-aleph templates
+const LAMED_ALEPH_TEMPLATES = {
+  peal: PEAL_LA,
+  pael: PAEL_LA,
+  afel: AFEL_LA,
+  ithpeel: ITHPEEL_LA,
+  ithpaal: ITHPAAL_LA,
+  ittafal: ITTAFAL_LA,
+};
+
 // Map of binyan keys to their templates
 const CONJUGATION_TEMPLATES = {
   // Aramaic
@@ -992,9 +1248,16 @@ const CONJUGATION_TEMPLATES = {
 export function conjugateVerb(root, binyanKey) {
   if (!root || root.length < 3) return null;
   
-  // Use lamed-hey templates for verbs where R3 is yud or hey
-  const lhTemplate = isLamedHey(root) ? LAMED_HEY_TEMPLATES[binyanKey] : null;
-  const template = lhTemplate || CONJUGATION_TEMPLATES[binyanKey];
+  // Use lamed-hey templates for Hebrew verbs where R3 is yud or hey,
+  // and lamed-aleph templates for Aramaic verbs where R3 is aleph or yud
+  let specialTemplate = null;
+  if (isLamedHey(root)) {
+    specialTemplate = LAMED_HEY_TEMPLATES[binyanKey];
+  }
+  if (!specialTemplate && isLamedAleph(root)) {
+    specialTemplate = LAMED_ALEPH_TEMPLATES[binyanKey];
+  }
+  const template = specialTemplate || CONJUGATION_TEMPLATES[binyanKey];
   if (!template) return null;
   
   const r = root.slice(0, 3); // Use first 3 consonants

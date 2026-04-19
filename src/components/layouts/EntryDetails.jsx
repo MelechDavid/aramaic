@@ -101,7 +101,7 @@ const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
         <div className="p-4 max-w-3xl mx-auto">
           {/* Entry content */}
           <div className="pt-12 pb-16">
-            <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            <h1 dir="rtl" className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               {entry.headwords.join(", ")}
             </h1>
 
