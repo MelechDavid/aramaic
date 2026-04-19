@@ -67,7 +67,7 @@ const ConjugationModal = ({ entry, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-[70] bg-white dark:bg-gray-900 flex flex-col transition-transform duration-300 ease-in-out ${
+      className={`absolute inset-0 z-[70] bg-white dark:bg-gray-900 flex flex-col transition-transform duration-300 ease-in-out ${
         isVisible ? 'translate-x-0' : 'translate-x-full'
       }`}
     >

@@ -14,6 +14,15 @@ const SOFIT_TO_REGULAR = {
   '\u05E5': '\u05E6', // ץ → צ
 };
 
+// Regular form to sofit (final form) mapping
+const REGULAR_TO_SOFIT = {
+  '\u05DB': '\u05DA', // כ → ך
+  '\u05DE': '\u05DD', // מ → ם
+  '\u05E0': '\u05DF', // נ → ן
+  '\u05E4': '\u05E3', // פ → ף
+  '\u05E6': '\u05E5', // צ → ץ
+};
+
 // Map dictionary abbreviations to full binyan names and our internal keys
 const BINYAN_MAP = {
   // Aramaic binyanim
@@ -46,6 +55,25 @@ const BINYAN_MAP = {
  */
 function normalizeSofit(letter) {
   return SOFIT_TO_REGULAR[letter] || letter;
+}
+
+/**
+ * Apply sofit (final form) to the last Hebrew consonant of a word.
+ * In Hebrew, כ מ נ פ צ become ך ם ן ף ץ when they appear at the end of a word.
+ */
+function applySofitToEnd(str) {
+  for (let i = str.length - 1; i >= 0; i--) {
+    const code = str.charCodeAt(i);
+    // Hebrew consonants range: U+05D0 to U+05EA
+    if (code >= 0x05D0 && code <= 0x05EA) {
+      const sofit = REGULAR_TO_SOFIT[str[i]];
+      if (sofit) {
+        return str.substring(0, i) + sofit + str.substring(i + 1);
+      }
+      return str; // Last consonant doesn't have a sofit form
+    }
+  }
+  return str;
 }
 
 /**
@@ -682,7 +710,7 @@ export function conjugateVerb(root, binyanKey) {
       forms: forms.map(({ person, form }) => ({
         person,
         ...(personLabels[person] || PERSON_LABELS[person] || {}),
-        aramaic: form(r),
+        aramaic: applySofitToEnd(form(r)),
       })),
     };
   }

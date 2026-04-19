@@ -56,89 +56,94 @@ const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
 
   return (
     <div 
-      className={`fixed inset-0 bg-white dark:bg-gray-900 z-[60] ${showConjugation ? 'overflow-hidden' : 'overflow-y-auto'} transform transition-transform duration-300 ease-in-out ${slideClass}`}
+      className={`fixed inset-0 bg-white dark:bg-gray-900 z-[60] transform transition-transform duration-300 ease-in-out ${slideClass}`}
       style={{ willChange: 'transform' }}
     >
-      {/* Fixed header with back button that stays visible when scrolling */}
-      <div className="sticky top-0 left-0 z-[61] bg-gradient-to-b from-white dark:from-gray-900 to-transparent pb-8 pointer-events-none" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-        <button
-          onClick={onBack}
-          className="absolute left-4 p-2 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all hover:scale-110 pointer-events-auto"
-          style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}
-          aria-label="Back to search results"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+      {/* Scrollable content area */}
+      <div className="h-full overflow-y-auto">
+        {/* Fixed header with back button that stays visible when scrolling */}
+        <div className="sticky top-0 left-0 z-[61] bg-gradient-to-b from-white dark:from-gray-900 to-transparent pb-8 pointer-events-none" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+          <button
+            onClick={onBack}
+            className="absolute left-4 p-2 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-all hover:scale-110 pointer-events-auto"
+            style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}
+            aria-label="Back to search results"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </button>
-        <div className="absolute right-4 flex items-center gap-2 pointer-events-auto" style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}>
-          {hasConjugation && (
-            <ConjugationButton
-              onClick={() => setShowConjugation(true)}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <div className="absolute right-4 flex items-center gap-2 pointer-events-auto" style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}>
+            {hasConjugation && (
+              <ConjugationButton
+                onClick={() => setShowConjugation(true)}
+                className="bg-white dark:bg-gray-800 shadow-md rounded-full"
+              />
+            )}
+            <HeartButton
+              entry={entry}
               className="bg-white dark:bg-gray-800 shadow-md rounded-full"
             />
-          )}
-          <HeartButton
+          </div>
+        </div>
+
+        <div className="p-4 max-w-3xl mx-auto">
+          {/* Entry content */}
+          <div className="pt-12 pb-16">
+            <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {entry.headwords.join(", ")}
+            </h1>
+
+            {/* English Terms */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {entry.englishTerms.map((term, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-1 bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 rounded-full text-sm"
+                >
+                  {term}
+                </span>
+              ))}
+            </div>
+
+            {/* Definition */}
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mt-2">
+              <section className="mb-5">
+                {entry.definition === "Loading..." ? (
+                  <div className="flex justify-center py-8">
+                    <div className="w-10 h-10 border-4 border-pink-600 border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                ) : (
+                  <div
+                    className="dictionary-entry text-gray-700 dark:text-gray-200 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: entry.definition }}
+                  />
+                )}
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Conjugation Modal - rendered outside scroll container so positioning works correctly inside transformed parent */}
+      {showConjugation && hasConjugation && (
+        <div className="absolute inset-0 z-[70]">
+          <ConjugationModal
             entry={entry}
-            className="bg-white dark:bg-gray-800 shadow-md rounded-full"
+            onClose={() => setShowConjugation(false)}
           />
         </div>
-      </div>
-
-      <div className="p-4 max-w-3xl mx-auto">
-        {/* Entry content */}
-        <div className="pt-12 pb-16">
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            {entry.headwords.join(", ")}
-          </h1>
-
-          {/* English Terms */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {entry.englishTerms.map((term, i) => (
-              <span
-                key={i}
-                className="px-3 py-1 bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 rounded-full text-sm"
-              >
-                {term}
-              </span>
-            ))}
-          </div>
-
-          {/* Definition */}
-          <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mt-2">
-            <section className="mb-5">
-              {entry.definition === "Loading..." ? (
-                <div className="flex justify-center py-8">
-                  <div className="w-10 h-10 border-4 border-pink-600 border-t-transparent rounded-full animate-spin"></div>
-                </div>
-              ) : (
-                <div
-                  className="dictionary-entry text-gray-700 dark:text-gray-200 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: entry.definition }}
-                />
-              )}
-            </section>
-          </div>
-        </div>
-      </div>
-
-      {/* Conjugation Modal */}
-      {showConjugation && hasConjugation && (
-        <ConjugationModal
-          entry={entry}
-          onClose={() => setShowConjugation(false)}
-        />
       )}
     </div>
   );
