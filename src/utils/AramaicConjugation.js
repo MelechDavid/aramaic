@@ -5,6 +5,8 @@
  * based on the tri-literal root system and standard binyan patterns.
  */
 
+import { buildQalTemplate } from './HebrewQalConjugation.js';
+
 // Sofit (final form) to regular form mapping
 const SOFIT_TO_REGULAR = {
   '\u05DA': '\u05DB', // ך → כ
@@ -155,6 +157,7 @@ const TENSE_LABELS = {
   imperative: 'Imperative',
   activeParticiple: 'Active Participle',
   passiveParticiple: 'Passive Participle',
+  infinitive: 'Infinitive (Construct)',
 };
 
 const PERSON_LABELS = {
@@ -408,6 +411,7 @@ const HEBREW_PERSON_LABELS = {
   'fs': { label: 'Fem. sg.', person: '', gender: 'fem.', number: 'sg.' },
   'mp': { label: 'Masc. pl.', person: '', gender: 'masc.', number: 'pl.' },
   'fp': { label: 'Fem. pl.', person: '', gender: 'fem.', number: 'pl.' },
+  'inf': { label: 'Infinitive', person: '', gender: '', number: '' },
 };
 
 // ============================================================
@@ -1248,6 +1252,26 @@ const CONJUGATION_TEMPLATES = {
 export function conjugateVerb(root, binyanKey) {
   if (!root || root.length < 3) return null;
   
+  // Hebrew Qal uses the exception-aware builder for all root types
+  if (binyanKey === 'qal') {
+    const qalTemplate = buildQalTemplate(root.slice(0, 3));
+    const r = root.slice(0, 3);
+    const info = Object.values(BINYAN_MAP).find(b => b.key === binyanKey);
+    const personLabels = HEBREW_PERSON_LABELS;
+    const result = {};
+    for (const [tenseKey, forms] of Object.entries(qalTemplate)) {
+      result[tenseKey] = {
+        label: TENSE_LABELS[tenseKey] || tenseKey,
+        forms: forms.map(({ person, form }) => ({
+          person,
+          ...(personLabels[person] || PERSON_LABELS[person] || {}),
+          aramaic: applySofitToEnd(form(r)),
+        })),
+      };
+    }
+    return result;
+  }
+
   // Use lamed-hey templates for Hebrew verbs where R3 is yud or hey,
   // and lamed-aleph templates for Aramaic verbs where R3 is aleph or yud
   let specialTemplate = null;
