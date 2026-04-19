@@ -6,6 +6,7 @@ const AudioButton = ({ src }) => {
     const [audioSrc, setAudioSrc] = useState("");
 
     useEffect(() => {
+        if (!src || !Array.isArray(src)) return;
         src.find((item) => {
             if (
                 (item.audio && String(item.audio).endsWith("uk.mp3")) ||

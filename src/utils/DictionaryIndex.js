@@ -257,6 +257,54 @@ class DictionaryIndex {
     };
   }
 
+  // Search by root letters (positional match on consonants)
+  // Each of r1, r2, r3 is a single Hebrew letter or empty string (wildcard)
+  async rootSearch(r1, r2, r3, limit = 50, skip = 0) {
+    if (!this.isLoaded && !this.isLoading) {
+      await this.loadDictionary();
+    } else if (this.isLoading) {
+      while (this.isLoading) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+    }
+
+    // Normalize input letters (sofit → regular)
+    const norm = (ch) => ch ? this.removeVowels(ch) : '';
+    const s1 = norm(r1);
+    const s2 = norm(r2);
+    const s3 = norm(r3);
+
+    // Need at least one letter specified
+    if (!s1 && !s2 && !s3) return { results: [], totalCount: 0 };
+
+    // Extract only Hebrew consonants from a normalized headword
+    const consonants = (hw) => hw.replace(/[^\u05D0-\u05EA]/g, '');
+
+    const matchingEntries = [];
+
+    for (const entry of this.entries) {
+      const isMatch = entry.headwordsNormalized.some(hw => {
+        const c = consonants(hw);
+        if (c.length < 2 || c.length > 4) return false;
+        // Match against first 3 consonants (the root)
+        if (s1 && c[0] !== s1) return false;
+        if (s2 && c[1] !== s2) return false;
+        if (s3 && (c.length < 3 || c[2] !== s3)) return false;
+        return true;
+      });
+
+      if (isMatch) {
+        matchingEntries.push({ ...entry, relevanceScore: 0 });
+      }
+    }
+
+    const paginatedResults = matchingEntries.slice(skip, skip + limit);
+    return {
+      results: paginatedResults,
+      totalCount: matchingEntries.length,
+    };
+  }
+
   // Get full entry details by ID
   async getEntryDetails(entryId) {
     // Check cache first
