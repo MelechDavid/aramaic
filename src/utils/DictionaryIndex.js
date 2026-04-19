@@ -435,10 +435,10 @@ class DictionaryIndex {
       // Process complete entry data
       const completeDefinition = processEntryContent(entry);
 
-      // Detect if entry is Aramaic (Chaldean)
+      // Detect if entry is Aramaic (Chaldean) or Hebrew
       const languageKey = entry.querySelector('language-key');
-      const isAramaic = languageKey ? /\bch\.?\b/i.test(languageKey.textContent) : false;
-      const isHebrew = languageKey ? /b\.\s*h\./i.test(languageKey.textContent) : false;
+      let isAramaic = languageKey ? /\bch\.?\b/i.test(languageKey.textContent) : false;
+      let isHebrew = languageKey ? /b\.\s*h\./i.test(languageKey.textContent) : false;
 
       // Extract binyan information
       const binyanElements = entry.querySelectorAll('binyan');
@@ -450,6 +450,28 @@ class DictionaryIndex {
           form: formEl ? formEl.textContent.trim() : '',
         };
       }).filter(b => b.name);
+
+      // If language not detected from <language-key>, check definition text and binyan names
+      if (!isAramaic && !isHebrew && binyanim.length > 0) {
+        // Check definition text for language markers like (b. h.) or (ch.)
+        const firstDef = entry.querySelector('definition');
+        const defText = firstDef ? firstDef.textContent : '';
+        if (/\bb\.\s*h\./i.test(defText)) {
+          isHebrew = true;
+        } else if (/\bch\.?\b/i.test(defText)) {
+          isAramaic = true;
+        }
+
+        // If still not detected, infer from binyan names
+        if (!isAramaic && !isHebrew) {
+          const hebrewBinyanPattern = /^(Nif|Pi|Pu|Hif|Hof|Hithpa|Nithpa)\./;
+          const aramaicBinyanPattern = /^(Pa|Af|Ithpe|Ithpa|Ittaf|Ishtaf|Pe|Palp|Ithpalp)\./;
+          const hasHebrewBinyan = binyanim.some(b => hebrewBinyanPattern.test(b.name));
+          const hasAramaicBinyan = binyanim.some(b => aramaicBinyanPattern.test(b.name));
+          if (hasHebrewBinyan) isHebrew = true;
+          if (hasAramaicBinyan) isAramaic = true;
+        }
+      }
 
       // Extract separate notes section (for backward compatibility)
       const notes = Array.from(entry.querySelectorAll('sense notes'))
