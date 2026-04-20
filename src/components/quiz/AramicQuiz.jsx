@@ -37,6 +37,7 @@ const AramicQuiz = () => {
   const [showExplanation, setShowExplanation] = useState(false);
   const [incorrectOption, setIncorrectOption] = useState(null);
   const [skippedCount, setSkippedCount] = useState(0);
+  const [answerHistory, setAnswerHistory] = useState([]); // { selected, wasCorrect } per index
   const quizTopRef = useRef(null);
 
   // Build filtered questions whenever quiz starts
@@ -65,6 +66,7 @@ const AramicQuiz = () => {
     setIncorrectOption(null);
     setCorrectAnswers(0);
     setSkippedCount(0);
+    setAnswerHistory([]);
     setQuizStarted(true);
   };
 
@@ -80,6 +82,13 @@ const AramicQuiz = () => {
     } else {
       setIncorrectOption(optionIndex);
     }
+
+    // Record answer
+    setAnswerHistory(prev => {
+      const copy = [...prev];
+      copy[currentQuestion] = { selected: optionIndex, wasCorrect: isCorrect };
+      return copy;
+    });
 
     setTimeout(() => {
       setShowExplanation(true);
@@ -106,6 +115,11 @@ const AramicQuiz = () => {
 
   const handleSkip = () => {
     setSkippedCount(prev => prev + 1);
+    setAnswerHistory(prev => {
+      const copy = [...prev];
+      copy[currentQuestion] = { selected: null, wasCorrect: false, skipped: true };
+      return copy;
+    });
     setSelectedOption(null);
     setShowExplanation(false);
     setIncorrectOption(null);
@@ -116,6 +130,27 @@ const AramicQuiz = () => {
       setQuizCompleted(true);
     }
 
+    setTimeout(() => {
+      if (quizTopRef.current) {
+        quizTopRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 50);
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestion <= 0) return;
+    const prevIdx = currentQuestion - 1;
+    const prev = answerHistory[prevIdx];
+    setCurrentQuestion(prevIdx);
+    if (prev && !prev.skipped) {
+      setSelectedOption(prev.selected);
+      setIncorrectOption(prev.wasCorrect ? null : prev.selected);
+      setShowExplanation(true);
+    } else {
+      setSelectedOption(null);
+      setIncorrectOption(null);
+      setShowExplanation(false);
+    }
     setTimeout(() => {
       if (quizTopRef.current) {
         quizTopRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -320,7 +355,7 @@ const AramicQuiz = () => {
           <div className="category text-sm font-medium text-pink-600">
             {q.category}
           </div>
-          {/* Favorite + Archive buttons */}
+          {/* Favorite button */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => toggleQuizFavorite(q.question)}
@@ -329,36 +364,6 @@ const AramicQuiz = () => {
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill={isFav ? '#ec4899' : 'none'} stroke={isFav ? '#ec4899' : 'currentColor'} strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-              </svg>
-            </button>
-            <button
-              onClick={() => {
-                archiveQuestion(q.question);
-                // Auto-advance after archiving
-                if (currentQuestion < questions.length - 1) {
-                  const updated = questions.filter((_, i) => i !== currentQuestion);
-                  setQuestions(updated);
-                  setSelectedOption(null);
-                  setShowExplanation(false);
-                  setIncorrectOption(null);
-                  // If currentQuestion is now out of bounds, adjust
-                  if (currentQuestion >= updated.length) {
-                    setQuizCompleted(true);
-                  }
-                } else if (questions.length === 1) {
-                  setQuizCompleted(true);
-                } else {
-                  const updated = questions.filter((_, i) => i !== currentQuestion);
-                  setQuestions(updated);
-                  setCurrentQuestion(updated.length - 1);
-                  setQuizCompleted(true);
-                }
-              }}
-              className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              title="Archive question"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
               </svg>
             </button>
           </div>
@@ -381,14 +386,22 @@ const AramicQuiz = () => {
         </div>
       </div>
 
-      {/* Skip button - only before answering */}
+      {/* Skip + Previous buttons - only before answering */}
       {selectedOption === null && !showExplanation && (
-        <div className="text-center mb-4">
+        <div className="flex justify-center items-center gap-3 mb-4">
+          {currentQuestion > 0 && (
+            <button
+              onClick={handlePrevious}
+              className="px-5 py-2 text-sm text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              ← Previous
+            </button>
+          )}
           <button
             onClick={handleSkip}
             className="px-5 py-2 text-sm text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
-            Skip Question →
+            Skip →
           </button>
         </div>
       )}
@@ -402,12 +415,40 @@ const AramicQuiz = () => {
             <div className="diagram mt-4" dangerouslySetInnerHTML={{ __html: q.diagram }} />
           )}
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 flex flex-wrap justify-center items-center gap-3">
+            {currentQuestion > 0 && (
+              <button
+                onClick={handlePrevious}
+                className="px-5 py-2 text-sm text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
+                ← Previous
+              </button>
+            )}
             <button
               onClick={advanceQuestion}
               className="px-6 py-2 bg-pink-600 text-white rounded-lg shadow hover:bg-pink-700 transition-colors"
             >
               {currentQuestion < questions.length - 1 ? 'Next Question' : 'Complete Quiz'}
+            </button>
+            <button
+              onClick={() => {
+                archiveQuestion(q.question);
+                // Auto-advance after archiving
+                const updated = questions.filter((_, i) => i !== currentQuestion);
+                if (updated.length === 0) {
+                  setQuizCompleted(true);
+                  return;
+                }
+                setQuestions(updated);
+                const nextIdx = currentQuestion >= updated.length ? updated.length - 1 : currentQuestion;
+                setCurrentQuestion(nextIdx);
+                setSelectedOption(null);
+                setShowExplanation(false);
+                setIncorrectOption(null);
+              }}
+              className="px-5 py-2 text-sm text-orange-700 dark:text-orange-300 border border-orange-400 dark:border-orange-600 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors"
+            >
+              Archive Question
             </button>
           </div>
         </div>
