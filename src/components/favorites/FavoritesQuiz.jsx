@@ -64,7 +64,7 @@ const FavoritesQuiz = () => {
     if (index === questions[currentQuestion].correct) {
       setCorrectAnswers(c => c + 1);
     }
-    setTimeout(() => setShowNext(true), 800);
+    setTimeout(() => setShowNext(true), 400);
   };
 
   const handleNext = () => {

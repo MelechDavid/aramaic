@@ -106,7 +106,7 @@ const useFetchData = () => {
             setLoading(true);
             
             // Add a deliberate delay before loading more results
-            await new Promise(resolve => setTimeout(resolve, 4000)); // 750ms delay
+            await new Promise(resolve => setTimeout(resolve, 200));
             
             // Calculate next page
             const nextPage = page + 1;

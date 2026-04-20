@@ -38,7 +38,7 @@ const RecentEntries = ({ toggleEntry, expandedEntries }) => {
       toggleEntry(entry.id);
     } else {
       setSelectedEntry(prev => ({ ...prev, ...expandedEntries[entry.id] }));
-      setTimeout(() => setIsLoading(false), 300);
+      setTimeout(() => setIsLoading(false), 200);
     }
   };
 
@@ -48,7 +48,7 @@ const RecentEntries = ({ toggleEntry, expandedEntries }) => {
       setSelectedEntry(null);
       pendingIdRef.current = null;
       setIsLoading(false);
-    }, 300);
+    }, 200);
   };
 
   return (

@@ -43,7 +43,7 @@ const FavoritesModal = () => {
     setTimeout(() => {
       setSelectedEntry(null);
       pendingEntryRef.current = null;
-    }, 300);
+    }, 200);
   };
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const FavoritesModal = () => {
 
   return (
     <div
-      className={`fixed inset-0 bg-white dark:bg-gray-900 z-50 transform transition-transform duration-300 ease-in-out ${slideClass}`}
+      className={`fixed inset-0 bg-white dark:bg-gray-900 z-50 transform transition-transform duration-200 ease-in-out ${slideClass}`}
       style={{ willChange: 'transform' }}
     >
       {/* Scrollable content area */}
@@ -130,7 +130,7 @@ const FavoritesModal = () => {
 
       {/* EntryDetails rendered outside the scroll container so fixed positioning works correctly inside a transformed parent */}
       {selectedEntry && (
-        <div className={`absolute inset-0 z-[52] transition-transform duration-300 ease-in-out ${slideAnimation ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className={`absolute inset-0 z-[52] transition-transform duration-200 ease-in-out ${slideAnimation ? 'translate-x-0' : 'translate-x-full'}`}>
           <EntryDetails
             entry={selectedEntry}
             onBack={handleEntryBack}

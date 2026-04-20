@@ -39,7 +39,7 @@ const QuizModal = ({ isOpen, onClose }) => {
 
   return (
     <div 
-      className={`fixed inset-0 bg-white dark:bg-gray-900 z-50 overflow-y-auto transform transition-transform duration-300 ease-in-out ${slideClass}`}
+      className={`fixed inset-0 bg-white dark:bg-gray-900 z-50 overflow-y-auto transform transition-transform duration-200 ease-in-out ${slideClass}`}
       style={{ willChange: 'transform' }}
     >
       {/* Back button to close the quiz */}

@@ -56,7 +56,7 @@ const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
 
   return (
     <div 
-      className={`fixed inset-0 bg-white dark:bg-gray-900 z-[60] transform transition-transform duration-300 ease-in-out ${slideClass}`}
+      className={`fixed inset-0 bg-white dark:bg-gray-900 z-[60] transform transition-transform duration-200 ease-in-out ${slideClass}`}
       style={{ willChange: 'transform' }}
     >
       {/* Scrollable content area */}

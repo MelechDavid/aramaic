@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import dictionaryIndex from '../../utils/DictionaryIndex';
 import EntryDetails from '../layouts/EntryDetails';
+import InfiniteScroll from '../ui/InfiniteScroll';
 import HeartButton from '../buttons/HeartButton';
 import { useFavoritesContext } from '../../context/FavoritesContext';
+
+const RESULTS_PER_PAGE = 50;
 
 const HEBREW_LETTERS = [
   'א','ב','ג','ד','ה','ו','ז','ח','ט','י',
@@ -17,11 +20,13 @@ const RootSearchModal = ({ isOpen, onClose }) => {
   const [results, setResults] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [searched, setSearched] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [slideAnimation, setSlideAnimation] = useState(false);
   const [isLoadingEntry, setIsLoadingEntry] = useState(false);
   const pendingEntryRef = useRef(null);
+  const searchParamsRef = useRef({ r1: '', r2: '', r3: '' });
   const { addRecentEntry } = useFavoritesContext();
 
   const boxes = [
@@ -59,7 +64,7 @@ const RootSearchModal = ({ isOpen, onClose }) => {
       setR1(''); setR2(''); setR3('');
       setActiveBox(0);
       setResults([]); setTotalCount(0);
-      setSearched(false);
+      setSearched(false); setLoadingMore(false);
       setSelectedEntry(null);
       setSlideAnimation(false);
     }
@@ -69,8 +74,10 @@ const RootSearchModal = ({ isOpen, onClose }) => {
     if (!r1 && !r2 && !r3) return;
     setLoading(true);
     setSearched(true);
+    setResults([]);
+    searchParamsRef.current = { r1, r2, r3 };
     try {
-      const res = await dictionaryIndex.rootSearch(r1, r2, r3, 100);
+      const res = await dictionaryIndex.rootSearch(r1, r2, r3, RESULTS_PER_PAGE, 0);
       setResults(res.results);
       setTotalCount(res.totalCount);
     } catch (err) {
@@ -80,11 +87,25 @@ const RootSearchModal = ({ isOpen, onClose }) => {
     }
   };
 
+  const handleLoadMore = useCallback(async () => {
+    if (loadingMore || loading) return;
+    setLoadingMore(true);
+    try {
+      const { r1: sr1, r2: sr2, r3: sr3 } = searchParamsRef.current;
+      const res = await dictionaryIndex.rootSearch(sr1, sr2, sr3, RESULTS_PER_PAGE, results.length);
+      setResults(prev => [...prev, ...res.results]);
+    } catch (err) {
+      console.error('Root search load more error:', err);
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [loadingMore, loading, results.length]);
+
   const handleClear = () => {
     setR1(''); setR2(''); setR3('');
     setActiveBox(0);
     setResults([]); setTotalCount(0);
-    setSearched(false);
+    setSearched(false); setLoadingMore(false);
   };
 
   const handleEntryClick = async (entry) => {
@@ -113,7 +134,7 @@ const RootSearchModal = ({ isOpen, onClose }) => {
     setTimeout(() => {
       setSelectedEntry(null);
       pendingEntryRef.current = null;
-    }, 300);
+    }, 200);
   };
 
   const ref1 = useRef(null);
@@ -164,7 +185,7 @@ const RootSearchModal = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 bg-white dark:bg-gray-900 z-50 transform transition-transform duration-300 ease-in-out ${slideClass}`}
+      className={`fixed inset-0 bg-white dark:bg-gray-900 z-50 transform transition-transform duration-200 ease-in-out ${slideClass}`}
       style={{ willChange: 'transform' }}
     >
       {/* Scrollable content area */}
@@ -261,41 +282,47 @@ const RootSearchModal = ({ isOpen, onClose }) => {
             </p>
           )}
 
-          <div className="space-y-2">
-            {results.map(entry => (
-              <button
-                key={entry.id}
-                onClick={() => handleEntryClick(entry)}
-                className="w-full text-right p-3 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors border border-gray-200 dark:border-gray-700"
-                dir="rtl"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="text-lg font-bold text-gray-900 dark:text-white truncate">
-                      {entry.headwords[0]}
-                    </span>
-                    {entry.headwords.length > 1 && (
-                      <span className="text-sm text-gray-400 dark:text-gray-500 truncate">
-                        {entry.headwords.slice(1).join(', ')}
+          <InfiniteScroll
+            hasMore={results.length < totalCount}
+            loading={loadingMore}
+            onLoadMore={handleLoadMore}
+          >
+            <div className="space-y-2">
+              {results.map(entry => (
+                <button
+                  key={entry.id}
+                  onClick={() => handleEntryClick(entry)}
+                  className="w-full text-right p-3 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors border border-gray-200 dark:border-gray-700"
+                  dir="rtl"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-lg font-bold text-gray-900 dark:text-white truncate">
+                        {entry.headwords[0]}
                       </span>
-                    )}
+                      {entry.headwords.length > 1 && (
+                        <span className="text-sm text-gray-400 dark:text-gray-500 truncate">
+                          {entry.headwords.slice(1).join(', ')}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1 flex-shrink-0 mr-2" dir="ltr">
+                      <HeartButton entry={entry} />
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1 flex-shrink-0 mr-2" dir="ltr">
-                    <HeartButton entry={entry} />
-                  </div>
-                </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2 text-left" dir="ltr">
-                  {entry.englishTerms.slice(0, 3).join(', ')}
-                </p>
-              </button>
-            ))}
-          </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2 text-left" dir="ltr">
+                    {entry.englishTerms.slice(0, 3).join(', ')}
+                  </p>
+                </button>
+              ))}
+            </div>
+          </InfiniteScroll>
         </div>
       </div>
 
       {/* Entry detail slide-in — same pattern as FavoritesModal */}
       {selectedEntry && (
-        <div className={`absolute inset-0 z-[52] transition-transform duration-300 ease-in-out ${slideAnimation ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className={`absolute inset-0 z-[52] transition-transform duration-200 ease-in-out ${slideAnimation ? 'translate-x-0' : 'translate-x-full'}`}>
           <EntryDetails
             entry={selectedEntry}
             onBack={handleEntryBack}

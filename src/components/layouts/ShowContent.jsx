@@ -57,7 +57,7 @@ const ShowContent = ({ data, hasMore, loading, onLoadMore, totalResults, expande
             // If data is already loaded, just update the loading state
             setTimeout(() => {
                 setIsLoading(false);
-            }, 300); // Short delay to allow animation to complete
+            }, 200);
         }
     };
 
@@ -90,7 +90,7 @@ const ShowContent = ({ data, hasMore, loading, onLoadMore, totalResults, expande
             // Also clear any pending entry
             pendingEntryRef.current = null;
             setIsLoading(false);
-        }, 300); // Matches animation duration
+        }, 200);
     };
 
     return (
