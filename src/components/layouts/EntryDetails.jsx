@@ -2,10 +2,12 @@ import React, { useState, useEffect, useMemo } from "react";
 import HeartButton from "../buttons/HeartButton";
 import ConjugationButton from "../buttons/ConjugationButton";
 import ConjugationModal from "../conjugation/ConjugationModal";
+import EntryWordMenu from "../ui/EntryWordMenu";
 import { getAvailableBinyanim, extractRoot } from "../../utils/AramaicConjugation";
 
 const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
   const [showConjugation, setShowConjugation] = useState(false);
+  const [showWordMenu, setShowWordMenu] = useState(false);
 
   // Check if this entry has conjugation data available (Aramaic or Hebrew)
   const hasConjugation = useMemo(() => {
@@ -101,7 +103,11 @@ const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
         <div className="p-4 max-w-3xl mx-auto">
           {/* Entry content */}
           <div className="pt-12 pb-16">
-            <h1 dir="rtl" className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            <h1
+              dir="rtl"
+              className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4 cursor-pointer active:text-pink-600 dark:active:text-pink-400 transition-colors select-none"
+              onClick={() => setShowWordMenu(true)}
+            >
               {entry.headwords.join(", ")}
             </h1>
 
@@ -144,6 +150,16 @@ const EntryDetails = ({ entry, onBack, isSlideIn, skipScrollLock = false }) => {
             onClose={() => setShowConjugation(false)}
           />
         </div>
+      )}
+
+      {/* Entry word action menu (pronounce, copy, share) */}
+      {showWordMenu && (
+        <EntryWordMenu
+          headwords={entry.headwords}
+          englishTerms={entry.englishTerms}
+          definition={entry.definition}
+          onClose={() => setShowWordMenu(false)}
+        />
       )}
     </div>
   );

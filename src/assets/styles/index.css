@@ -495,3 +495,21 @@ div[data-entry-id][class*="bg-white"] {
     box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
   }
 }
+
+/* Slide-up animation for bottom sheet menus */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.animate-slide-up {
+  animation: slide-up 0.25s ease-out;
+}
+
+/* Safe area padding for bottom sheet */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+}
