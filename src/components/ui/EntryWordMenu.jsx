@@ -1,9 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import { speakHebrew, stripNikkud } from "../../utils/textUtils";
 
-const EntryWordMenu = ({ headwords, englishTerms, definition, onClose }) => {
+/**
+ * Reusable action menu for Hebrew/Aramaic words.
+ *
+ * Usage A (dictionary entry):
+ *   <EntryWordMenu headwords={[...]} englishTerms={[...]} definition="..." onClose={fn} />
+ *
+ * Usage B (standalone word, e.g. conjugation form):
+ *   <EntryWordMenu word="שָׁמַר" subtitle="Qal Past 3ms" onClose={fn} />
+ */
+const EntryWordMenu = ({ headwords, englishTerms, definition, word, subtitle, onClose }) => {
   const menuRef = useRef(null);
-  const headwordText = headwords.join(", ");
+
+  // Derive the display word from either prop style
+  const displayWord = word || (headwords && headwords.join(", ")) || "";
+  const isEntryMode = !word && headwords;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -11,7 +23,6 @@ const EntryWordMenu = ({ headwords, englishTerms, definition, onClose }) => {
         onClose();
       }
     };
-    // Delay listener so the opening click doesn't immediately close it
     const timer = setTimeout(() => {
       document.addEventListener("click", handleClickOutside, true);
     }, 10);
@@ -25,7 +36,6 @@ const EntryWordMenu = ({ headwords, englishTerms, definition, onClose }) => {
     try {
       await navigator.clipboard.writeText(text);
     } catch {
-      // Fallback for older WebView versions
       const textarea = document.createElement("textarea");
       textarea.value = text;
       textarea.style.position = "fixed";
@@ -43,7 +53,6 @@ const EntryWordMenu = ({ headwords, englishTerms, definition, onClose }) => {
       const { Share } = await import("@capacitor/share");
       await Share.share({ text });
     } catch {
-      // Fallback to Web Share API if Capacitor not available
       if (navigator.share) {
         await navigator.share({ text });
       }
@@ -52,16 +61,20 @@ const EntryWordMenu = ({ headwords, englishTerms, definition, onClose }) => {
   };
 
   const handlePronounce = () => {
-    speakHebrew(headwordText);
+    speakHebrew(displayWord);
     onClose();
   };
 
-  // Build a plain-text version of the definition (strip HTML)
-  const plainDefinition = definition && definition !== "Loading..."
-    ? definition.replace(/<[^>]*>/g, "").trim()
-    : "";
-
-  const entryDetailsText = `${headwordText}\n${englishTerms.join(", ")}${plainDefinition ? "\n\n" + plainDefinition : ""}`;
+  // Build share-friendly details text
+  const buildDetailsText = () => {
+    if (isEntryMode) {
+      const plainDef = definition && definition !== "Loading..."
+        ? definition.replace(/<[^>]*>/g, "").trim()
+        : "";
+      return `${displayWord}\n${englishTerms.join(", ")}${plainDef ? "\n\n" + plainDef : ""}`;
+    }
+    return subtitle ? `${displayWord}\n${subtitle}` : displayWord;
+  };
 
   const menuItems = [
     {
@@ -80,7 +93,7 @@ const EntryWordMenu = ({ headwords, englishTerms, definition, onClose }) => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
         </svg>
       ),
-      action: () => copyToClipboard(headwordText),
+      action: () => copyToClipboard(displayWord),
     },
     {
       label: "Copy without Nikkud",
@@ -89,25 +102,25 @@ const EntryWordMenu = ({ headwords, englishTerms, definition, onClose }) => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
         </svg>
       ),
-      action: () => copyToClipboard(stripNikkud(headwordText)),
+      action: () => copyToClipboard(stripNikkud(displayWord)),
     },
     {
-      label: "Share Entry Word",
+      label: isEntryMode ? "Share Entry Word" : "Share Word",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
         </svg>
       ),
-      action: () => handleShare(headwordText),
+      action: () => handleShare(displayWord),
     },
     {
-      label: "Share Entry Details",
+      label: isEntryMode ? "Share Entry Details" : "Share with Details",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
         </svg>
       ),
-      action: () => handleShare(entryDetailsText),
+      action: () => handleShare(buildDetailsText()),
     },
   ];
 
@@ -126,8 +139,13 @@ const EntryWordMenu = ({ headwords, englishTerms, definition, onClose }) => {
         {/* Header showing the word */}
         <div className="px-6 pb-3 border-b border-gray-200 dark:border-gray-700">
           <p dir="rtl" className="text-xl font-bold text-gray-900 dark:text-white text-center">
-            {headwordText}
+            {displayWord}
           </p>
+          {subtitle && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-1">
+              {subtitle}
+            </p>
+          )}
         </div>
 
         {/* Menu items */}

@@ -1,10 +1,12 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { conjugateVerb, extractRoot, getAvailableBinyanim } from '../../utils/AramaicConjugation';
+import EntryWordMenu from '../ui/EntryWordMenu';
 
 const ConjugationModal = ({ entry, onClose }) => {
   const [selectedBinyan, setSelectedBinyan] = useState(null);
   const [selectedTense, setSelectedTense] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [menuWord, setMenuWord] = useState(null);
 
   // Slide-in animation on mount
   useEffect(() => {
@@ -163,14 +165,19 @@ const ConjugationModal = ({ entry, onClose }) => {
                         {form.person} {form.gender} {form.number}
                       </span>
                       {form.hebrew && (
-                        <span className="text-xs text-pink-600 dark:text-pink-400 mt-0.5" dir="rtl">
+                        <span
+                          className="text-xs text-pink-600 dark:text-pink-400 mt-0.5 cursor-pointer active:text-pink-800 dark:active:text-pink-300 select-none"
+                          dir="rtl"
+                          onClick={() => setMenuWord({ word: form.hebrew, subtitle: `${form.label} — ${form.person} ${form.gender} ${form.number}` })}
+                        >
                           {form.hebrew}
                         </span>
                       )}
                     </div>
                     <div
-                      className="text-2xl font-semibold text-gray-900 dark:text-white"
+                      className="text-2xl font-semibold text-gray-900 dark:text-white cursor-pointer active:text-pink-600 dark:active:text-pink-400 select-none transition-colors"
                       dir="rtl"
+                      onClick={() => setMenuWord({ word: form.aramaic, subtitle: `${form.label} — ${form.person} ${form.gender} ${form.number}` })}
                     >
                       {form.aramaic}
                     </div>
@@ -193,6 +200,15 @@ const ConjugationModal = ({ entry, onClose }) => {
           </div>
         )}
       </div>
+
+      {/* Word action menu for conjugation forms */}
+      {menuWord && (
+        <EntryWordMenu
+          word={menuWord.word}
+          subtitle={menuWord.subtitle}
+          onClose={() => setMenuWord(null)}
+        />
+      )}
     </div>
   );
 };
