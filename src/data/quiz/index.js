@@ -26,34 +26,34 @@ import { talmudicliterature } from './talmudicliterature';
 import { talmudicphrases } from './talmudicphrases';
 import { talmudicterminology } from './talmudicterminology';
 
+// Category map for filtering
+export const quizCategories = {
+  'Binyanim': binyanim,
+  'Nouns': nouns,
+  'Verb Forms': verbforms,
+  'Verb Suffixes': verbsuffixes,
+  'Verb Tense': verbtense,
+  'Aramaic Connectives': aramaicconnectives,
+  'Aramaic Prefixes': aramaicprefixes,
+  'Aramaic Suffixes': aramaicsuffixes,
+  'Demonstratives': demonstratives,
+  'Dialectical Variations': dialecticalvariations,
+  'Grammatical Terms': grammaticalterms,
+  'Hermeneutics': hermeneutics,
+  'Independent Pronouns': independentpronouns,
+  'Infinitives': infinitives,
+  'Loanwords': loanwords,
+  'Numbers': numbers,
+  'Participles': participles,
+  'Pronominal Suffixes': pronominalsuffixes,
+  'Syntax': syntax,
+  'Talmudic Literature': talmudicliterature,
+  'Talmudic Phrases': talmudicphrases,
+  'Talmudic Terminology': talmudicterminology,
+};
+
 // Combine all quiz categories
-export const quizData = [
-  ...binyanim,
-  ...nouns,
-//   ...particles,
-//   ...pronouns,
-  ...verbforms,
-  ...verbsuffixes,
-  ...verbtense,
-  // Add these as you create the files
-  ...aramaicconnectives,
-  ...aramaicprefixes,
-  ...aramaicsuffixes,
-  ...demonstratives,
-  ...dialecticalvariations,
-  ...grammaticalterms,
-  ...hermeneutics,
-  ...independentpronouns,
-  ...infinitives,
-  ...loanwords,
-  ...numbers,
-  ...participles,
-  ...pronominalsuffixes,
-  ...syntax,
-  ...talmudicliterature,
-  ...talmudicphrases,
-  ...talmudicterminology,
-];
+export const quizData = Object.values(quizCategories).flat();
 
 // Export individual categories
 export {
