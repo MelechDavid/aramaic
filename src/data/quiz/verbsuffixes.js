@@ -40,40 +40,40 @@ export const verbsuffixes = [
       },
       {
         "category": "Verb Suffixes",
-        "question": "What is the first-person plural suffix in Aramaic?",
+        "question": "What is the masculine plural suffix for Aramaic nouns?",
         "options": [
+          "־ָא (-a)",
+          "־ַת (-at)",
           "־ִין (-in)",
-          "־נָא (-na)",
-          "־תּוּן (-tun)",
-          "־יַן (-yan)"
+          "־וּת (-ut)"
         ],
-        "correct": 1,
+        "correct": 2,
         "explanation": "The masculine plural suffix in Aramaic is <b>־ִין</b> (-in). This suffix marks plural nouns and is the equivalent of the Hebrew ־ִים (-im) ending. For example, 'גַּבְרִין' (gavrin) means 'men'.",
         "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Masculine Plural Examples</h4>\n                    <table>\n                        <tr><th>Singular</th><th>Plural with -in</th><th>Meaning</th></tr>\n                        <tr><td>גְּבַר (gevar)</td><td>גַּבְרִין (gavrin)</td><td>men</td></tr>\n                        <tr><td>מֶלֶךְ (melekh)</td><td>מַלְכִין (malkhin)</td><td>kings</td></tr>\n                        <tr><td>סָפַר (safar)</td><td>סָפְרִין (safrin)</td><td>scribes</td></tr>\n                        <tr><td>חֲכָם (ḥakham)</td><td>חֲכִימִין (ḥakhimin)</td><td>wise men</td></tr>\n                    </table>\n                </div>"
       },
       {
         "category": "Verb Suffixes",
-        "question": "What is the second-person masculine plural suffix in Aramaic?",
+        "question": "How is the construct state (status constructus) formed in Aramaic?",
         "options": [
-          "־ָן (-an)",
-          "־תֶּם (-tem)",
-          "־תּוּן (-tun)",
-          "־ִין (-in)"
+          "By adding the suffix ־ִין (-in)",
+          "By removing the definite article suffix",
+          "By adding the prefix מְ־ (mə-)",
+          "By doubling the middle root letter"
         ],
-        "correct": 2,
+        "correct": 1,
         "explanation": "The construct state (status constructus) in Aramaic is formed by removing the definite article suffix (־ָא). This form is used in possessive constructions, linking two nouns together.",
         "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Construct State Formation</h4>\n                    <table>\n                        <tr><th>Emphatic State</th><th>Construct State</th><th>Example Usage</th></tr>\n                        <tr><td>מַלְכָּא (malka - the king)</td><td>מֶלֶךְ (melekh - king of)</td><td>מֶלֶךְ יִשְׂרָאֵל (melekh yisra'el - king of Israel)</td></tr>\n                        <tr><td>סִפְרָא (sifra - the book)</td><td>סְפַר (sefar - book of)</td><td>סְפַר אוֹרָיְתָא (sefar oraita - book of the Law)</td></tr>\n                        <tr><td>בֵּיתָא (beita - the house)</td><td>בֵּית (beit - house of)</td><td>בֵּית רַבָּן (beit rabban - house of the teacher)</td></tr>\n                    </table>\n                </div>"
       },
       {
         "category": "Verb Suffixes",
-        "question": "What is the third-person masculine plural suffix in Aramaic?",
+        "question": "What characterizes the emphatic state in Aramaic?",
         "options": [
-          "־ָא (-a)",
-          "־ִין (-in)",
-          "־וּן (-un)",
-          "־תּוּן (-tun)"
+          "It has no suffix and indicates indefiniteness",
+          "It uses the suffix ־ָא (-a) to mark definiteness",
+          "It only appears in plural forms",
+          "It requires a prefix rather than a suffix"
         ],
-        "correct": 2,
+        "correct": 1,
         "explanation": "The emphatic state in Aramaic is marked with the suffix <b>־ָא</b> (-a) and typically indicates definiteness (like 'the' in English). Most nouns in Aramaic appear in this state in their basic form.",
         "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Emphatic State Formation</h4>\n                    <table>\n                        <tr><th>Absolute State</th><th>Emphatic State</th><th>Meaning</th></tr>\n                        <tr><td>מֶלֶךְ (melekh)</td><td>מַלְכָּא (malka)</td><td>the king</td></tr>\n                        <tr><td>סְפַר (sefar)</td><td>סִפְרָא (sifra)</td><td>the book</td></tr>\n                        <tr><td>גְּבַר (gevar)</td><td>גַּבְרָא (gavra)</td><td>the man</td></tr>\n                        <tr><td>בַּיִת (bayit)</td><td>בֵּיתָא (beita)</td><td>the house</td></tr>\n                    </table>\n                </div>"
       }

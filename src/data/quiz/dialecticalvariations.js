@@ -1,12 +1,12 @@
 export const dialecticalvariations = [
   {
     "category": "Dialectical Variations",
-    "question": "Which dialect of Aramaic is used in the Babylonian Talmud?",
+    "question": "What is the hermeneutical principle of קַל וָחוֹמֶר (qal va-ḥomer)?",
     "options": [
-      "Western Aramaic",
-      "Eastern Aramaic (Babylonian)",
-      "Imperial Aramaic",
-      "Syriac Aramaic"
+      "Analogy based on verbal similarity",
+      "Inference from minor to major",
+      "Context-based interpretation",
+      "Logical reasoning"
     ],
     "correct": 1,
     "explanation": "The Aramaic term <b>קַל וָחוֹמֶר</b> (qal va-ḥomer) refers to the hermeneutical principle of 'inference from minor to major' - a logical argument where what applies in a less important case will certainly apply in a more important one.",
@@ -14,27 +14,27 @@ export const dialecticalvariations = [
   },
   {
     "category": "Dialectical Variations",
-    "question": "Which dialect of Aramaic is used in the Jerusalem Talmud?",
+    "question": "What is the hermeneutical principle of גְּזֵרָה שָׁוָה (gezera shava)?",
     "options": [
-      "Western Aramaic (Palestinian/Galilean)",
-      "Eastern Aramaic (Babylonian)",
-      "Imperial Aramaic",
-      "Egyptian Aramaic"
+      "Inference from minor to major",
+      "Analogy based on verbal similarity",
+      "Context-based interpretation",
+      "Construction of a general principle from specific instances"
     ],
-    "correct": 0,
+    "correct": 1,
     "explanation": "The Aramaic term <b>גְּזֵרָה שָׁוָה</b> (gezera shava) refers to the hermeneutical principle of 'analogy based on verbal similarity' - where two laws that share a common word or phrase can illuminate each other's meaning.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Method of Gezera Shava</h4>\n                    <table>\n                        <tr><th>Component</th><th>Function</th><th>Example</th></tr>\n                        <tr><td>Similar terms</td><td>Identifying same word in two contexts</td><td>Word \"remember\" appears in two commandments</td></tr>\n                        <tr><td>Transferring laws</td><td>Applying laws from one context to another</td><td>Details of observance transfer between contexts</td></tr>\n                        <tr><td>Limitation</td><td>Only applies when tradition supports it</td><td>Cannot be applied arbitrarily to any similar terms</td></tr>\n                        <tr><td>Authority</td><td>Requires traditional basis</td><td>Must have been received as a valid comparison</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Dialectical Variations",
-    "question": "What is a distinctive feature of Babylonian Aramaic compared to Palestinian Aramaic?",
+    "question": "What is the hermeneutical principle of הֶקֵּשׁ (heqqesh)?",
     "options": [
-      "Loss of guttural sounds",
-      "More Greek loanwords",
-      "Retention of final nun",
-      "Simpler grammar"
+      "Inference from minor to major",
+      "Analogy based on verbal similarity",
+      "Context-based interpretation where juxtaposed laws inform each other",
+      "Resolving contradictions between texts"
     ],
-    "correct": 0,
+    "correct": 2,
     "explanation": "The Aramaic term <b>הֶקֵּשׁ</b> (heqqesh) refers to the hermeneutical principle of 'context-based interpretation' - where laws that appear together in the Torah are understood to inform one another.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Application of Heqqesh</h4>\n                    <table>\n                        <tr><th>Element</th><th>Function</th><th>Example</th></tr>\n                        <tr><td>Textual Proximity</td><td>Laws appearing in same verse/passage</td><td>Two commandments mentioned together</td></tr>\n                        <tr><td>Logical Connection</td><td>Establishing relationship between concepts</td><td>Laws grouped by common theme</td></tr>\n                        <tr><td>Legal Transfer</td><td>Applying rules from one subject to another</td><td>Requirements that apply to one apply to the other</td></tr>\n                        <tr><td>Limitation</td><td>Cannot contradict explicit teachings</td><td>Only fills in details not specified elsewhere</td></tr>\n                    </table>\n                </div>"
   }

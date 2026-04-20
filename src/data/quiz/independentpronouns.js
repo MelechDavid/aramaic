@@ -1,12 +1,12 @@
 export const independentpronouns = [
   {
     "category": "Independent Pronouns",
-    "question": "What is the Aramaic independent pronoun for 'I'?",
+    "question": "What is the Aramaic independent pronoun for 'we'?",
     "options": [
-      "אַנְתְּ (ant)",
-      "אֲנָא (ana)",
-      "הוּא (hu)",
-      "אֲנַחְנָא (anakhna)"
+      "אַנְתּוּן (antun)",
+      "אֲנַחְנָא (anakhna)",
+      "אִנּוּן (innun)",
+      "הִנּוּן (hinnun)"
     ],
     "correct": 1,
     "explanation": "The Aramaic independent pronoun for 'we' is <b>אֲנַחְנָא</b> (anakhna). It is used as a standalone pronoun to refer to a group that includes the speaker.",
@@ -14,12 +14,12 @@ export const independentpronouns = [
   },
   {
     "category": "Independent Pronouns",
-    "question": "What is the Aramaic independent pronoun for 'you' (masculine singular)?",
+    "question": "What is the Aramaic independent pronoun for 'you' (plural)?",
     "options": [
-      "אַנְתְּ (ant)",
-      "אַתָּה (atta)",
+      "אֲנַחְנָא (anakhna)",
       "אַנְתּוּן (antun)",
-      "אַת (at)"
+      "אִנּוּן (innun)",
+      "אַנְתְּ (ant)"
     ],
     "correct": 1,
     "explanation": "The Aramaic independent pronoun for 'you' (plural) is <b>אַנְתּוּן</b> (antun). It is used as a standalone pronoun to address multiple people.",
@@ -27,25 +27,25 @@ export const independentpronouns = [
   },
   {
     "category": "Independent Pronouns",
-    "question": "What is the Aramaic independent pronoun for 'you' (feminine singular)?",
+    "question": "What is the Aramaic independent pronoun for 'they'?",
     "options": [
-      "אַנְתְּ (ant)",
-      "אַת (at)",
-      "אַנְתָּה (atta)",
-      "אַנְתִּין (antin)"
+      "אַנְתּוּן (antun)",
+      "הִנּוּן (hinnun)",
+      "אִנּוּן (innun)",
+      "אֲנַחְנָא (anakhna)"
     ],
-    "correct": 0,
+    "correct": 2,
     "explanation": "The Aramaic independent pronoun for 'they' is <b>אִנּוּן</b> (innun). It is used as a standalone pronoun to refer to multiple people or things.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Third-Person Plural Independent Pronoun</h4>\n                    <table>\n                        <tr><th>Pronoun</th><th>Pronunciation</th><th>Usage Example</th></tr>\n                        <tr><td>אִנּוּן</td><td>innun</td><td>אִנּוּן אָמְרִין (innun amrin) - they say</td></tr>\n                        <tr><td>אִנּוּן</td><td>innun</td><td>אִנּוּן רַבָּנִין (innun rabbanin) - they are teachers</td></tr>\n                        <tr><td>אִנּוּן</td><td>innun</td><td>אִנּוּן חַכִּימִין (innun ḥakkimin) - they are wise</td></tr>\n                        <tr><td>אִנּוּן</td><td>innun</td><td>מַאן אִנּוּן (man innun) - who are they?</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Independent Pronouns",
-    "question": "What is the Aramaic independent pronoun for 'he'?",
+    "question": "What is the Aramaic demonstrative pronoun for 'this' (masculine singular)?",
     "options": [
-      "הִיא (hi)",
-      "הוּא (hu)",
-      "אִנּוּן (innun)",
-      "אַנְחְנָא (anakhna)"
+      "הָדָא (hada)",
+      "הָדֵין (haden)",
+      "הַהוּא (hahu)",
+      "אִלֵּין (illen)"
     ],
     "correct": 1,
     "explanation": "The Aramaic demonstrative pronoun for 'this' (masculine) is <b>הָדֵין</b> (haden). It is used to point out a masculine object that is near.",
@@ -53,12 +53,12 @@ export const independentpronouns = [
   },
   {
     "category": "Independent Pronouns",
-    "question": "What is the Aramaic independent pronoun for 'she'?",
+    "question": "What is the Aramaic demonstrative pronoun for 'this' (feminine singular)?",
     "options": [
-      "הוּא (hu)",
-      "הִיא (hi)",
-      "אִינִין (inin)",
-      "אַנְתְּ (ant)"
+      "הָדֵין (haden)",
+      "הָדָא (hada)",
+      "הַהִיא (hahi)",
+      "אִלֵּין (illen)"
     ],
     "correct": 1,
     "explanation": "The Aramaic demonstrative pronoun for 'this' (feminine) is <b>הָדָא</b> (hada). It is used to point out a feminine object that is near.",
@@ -66,38 +66,38 @@ export const independentpronouns = [
   },
   {
     "category": "Independent Pronouns",
-    "question": "What is the Aramaic independent pronoun for 'we'?",
+    "question": "What is the Aramaic demonstrative pronoun for 'that' (masculine singular)?",
     "options": [
-      "אֲנַחְנָא (anakhna)",
-      "אַנְתּוּן (antun)",
-      "אִנּוּן (innun)",
-      "הִנּוּן (hinnun)"
+      "הָדֵין (haden)",
+      "הַהִיא (hahi)",
+      "הַהוּא (hahu)",
+      "אִנּוּן (innun)"
     ],
-    "correct": 0,
+    "correct": 2,
     "explanation": "The Aramaic demonstrative pronoun for 'that' (masculine) is <b>הַהוּא</b> (hahu). It is used to point out a masculine object that is distant from the speaker.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Demonstrative 'That' (Masculine) Examples</h4>\n                    <table>\n                        <tr><th>Demonstrative</th><th>Pronunciation</th><th>Usage Example</th></tr>\n                        <tr><td>הַהוּא</td><td>hahu</td><td>הַהוּא גַּבְרָא (hahu gavra) - that man</td></tr>\n                        <tr><td>הַהוּא</td><td>hahu</td><td>הַהוּא סִפְרָא (hahu sifra) - that book</td></tr>\n                        <tr><td>הַהוּא</td><td>hahu</td><td>הַהוּא יוֹמָא (hahu yoma) - that day</td></tr>\n                        <tr><td>הַהוּא</td><td>hahu</td><td>בְּהַהוּא זִמְנָא (b'hahu zimna) - at that time</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Independent Pronouns",
-    "question": "What is the Aramaic independent pronoun for 'you' (plural)?",
+    "question": "What is the Aramaic demonstrative pronoun for 'that' (feminine singular)?",
     "options": [
-      "אַנְתּוּן (antun)",
-      "אֲנַחְנָא (anakhna)",
-      "אִנּוּן (innun)",
-      "אַנְתְּ (ant)"
+      "הַהוּא (hahu)",
+      "הַהִיא (hahi)",
+      "אִלֵּין (illen)",
+      "הָדֵין (haden)"
     ],
-    "correct": 0,
+    "correct": 1,
     "explanation": "The Aramaic demonstrative pronoun for 'that' (feminine) is <b>הַהִיא</b> (hahi). It is used to point out a feminine object that is distant from the speaker.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Demonstrative 'That' (Feminine) Examples</h4>\n                    <table>\n                        <tr><th>Demonstrative</th><th>Pronunciation</th><th>Usage Example</th></tr>\n                        <tr><td>הַהִיא</td><td>hahi</td><td>הַהִיא אִתְּתָא (hahi itta) - that woman</td></tr>\n                        <tr><td>הַהִיא</td><td>hahi</td><td>הַהִיא מִלְּתָא (hahi milleta) - that word/matter</td></tr>\n                        <tr><td>הַהִיא</td><td>hahi</td><td>הַהִיא שַׁעֲתָא (hahi sha'ata) - that hour/time</td></tr>\n                        <tr><td>הַהִיא</td><td>hahi</td><td>הַהִיא מְדִינְתָּא (hahi medineta) - that city</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Independent Pronouns",
-    "question": "What is the Aramaic independent pronoun for 'they'?",
+    "question": "What is the Aramaic demonstrative pronoun for 'these'?",
     "options": [
-      "הִנּוּן (hinnun)",
-      "אִנּוּן (innun)",
-      "אַנְתּוּן (antun)",
-      "הוּא וְהִיא (hu ve-hi)"
+      "הָדֵין (haden)",
+      "אִלֵּין (illen)",
+      "הַהוּא (hahu)",
+      "הַנְּהוֹן (hann'hon)"
     ],
     "correct": 1,
     "explanation": "The Aramaic demonstrative pronoun for 'these' is <b>אִלֵּין</b> (illen). It refers to multiple objects that are near to the speaker.",

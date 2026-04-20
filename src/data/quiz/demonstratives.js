@@ -1,25 +1,25 @@
 export const demonstratives = [
   {
     "category": "Demonstratives",
-    "question": "What is the Aramaic demonstrative pronoun for 'this' (masculine singular)?",
+    "question": "What is the Aramaic demonstrative pronoun for 'those' (plural distant)?",
     "options": [
+      "אִלֵּין (illen)",
       "הָדֵין (haden)",
-      "דָּא (da)",
-      "הָדָא (hada)",
-      "אֵלֶּה (elleh)"
+      "הַנְּהוֹן (hann'hon)",
+      "הָדָא (hada)"
     ],
-    "correct": 0,
+    "correct": 2,
     "explanation": "The Aramaic demonstrative pronoun for 'those' is <b>הַנְּהוֹן</b> (hann'hon). It refers to multiple objects that are distant from the speaker.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Demonstrative 'Those' Examples</h4>\n                    <table>\n                        <tr><th>Demonstrative</th><th>Pronunciation</th><th>Usage Example</th></tr>\n                        <tr><td>הַנְּהוֹן</td><td>hann'hon</td><td>הַנְּהוֹן גַּבְרֵי (hann'hon gavrei) - those men</td></tr>\n                        <tr><td>הַנְּהוֹן</td><td>hann'hon</td><td>הַנְּהוֹן מִלִּין (hann'hon millin) - those words</td></tr>\n                        <tr><td>הַנְּהוֹן</td><td>hann'hon</td><td>הַנְּהוֹן בָּתִּים (hann'hon battim) - those houses</td></tr>\n                        <tr><td>הַנְּהוֹן</td><td>hann'hon</td><td>הַנְּהוֹן יוֹמִין (hann'hon yomin) - those days</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Demonstratives",
-    "question": "What is the Aramaic demonstrative pronoun for 'this' (feminine singular)?",
+    "question": "What is the active participle of the verb כת״ב (to write) in Pe'al?",
     "options": [
-      "הָדֵין (haden)",
-      "הָדָא (hada)",
-      "אִלֵּין (illen)",
-      "דֵּן (den)"
+      "כְּתַב (k'tav)",
+      "כָּתֵב (katev)",
+      "כְּתִיב (k'tiv)",
+      "מִכְתַּב (mikhtav)"
     ],
     "correct": 1,
     "explanation": "The active participle of the verb כת״ב (to write) in Pe'al is <b>כָּתֵב</b> (katev). In Aramaic, participles function like present tense verbs and also as adjectives.",
@@ -27,38 +27,38 @@ export const demonstratives = [
   },
   {
     "category": "Demonstratives",
-    "question": "What is the Aramaic demonstrative pronoun for 'that' (masculine singular)?",
+    "question": "What is the passive participle of the verb כת״ב (to write) in Pe'al?",
     "options": [
-      "הַהוּא (hahu)",
-      "הַהִיא (hahi)",
-      "אִנּוּן (innun)",
-      "אִלֵּין (illen)"
+      "כָּתֵב (katev)",
+      "כְּתִיב (ketiv)",
+      "מְכַתֵּב (mekattev)",
+      "מִתְכְּתֵב (mitkettev)"
     ],
-    "correct": 0,
+    "correct": 1,
     "explanation": "The passive participle of the verb כת״ב (to write) in Pe'al is <b>כְּתִיב</b> (ketiv). It expresses the state resulting from an action being done to something.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Passive Participle Formation in Pe'al</h4>\n                    <table>\n                        <tr><th>Root</th><th>Perfect</th><th>Passive Participle</th><th>Meaning</th></tr>\n                        <tr><td>כ.ת.ב</td><td>כְּתַב (ketav)</td><td>כְּתִיב (ketiv)</td><td>written</td></tr>\n                        <tr><td>ק.ט.ל</td><td>קְטַל (qetal)</td><td>קְטִיל (qetil)</td><td>killed</td></tr>\n                        <tr><td>ש.מ.ע</td><td>שְׁמַע (shema')</td><td>שְׁמִיעַ (shemia')</td><td>heard</td></tr>\n                        <tr><td>ע.ב.ד</td><td>עֲבַד (avad)</td><td>עֲבִיד (avid)</td><td>done/made</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Demonstratives",
-    "question": "What is the Aramaic demonstrative pronoun for 'that' (feminine singular)?",
+    "question": "What is the active participle of the verb קט״ל (to kill) in the Pa'el binyan?",
     "options": [
-      "הַהִיא (hahi)",
-      "הַהוּא (hahu)",
-      "אִלֵּין (illen)",
-      "הָדֵין (haden)"
+      "קָטֵל (qatel)",
+      "קַטֵּל (qattel)",
+      "מְקַטֵּל (meqattel)",
+      "מִתְקַטֵּל (mitqattel)"
     ],
-    "correct": 0,
+    "correct": 2,
     "explanation": "The active participle of the verb קט״ל (to kill) in the Pa'el binyan is <b>מְקַטֵּל</b> (meqattel). Pa'el participles typically have an intensified meaning compared to Pe'al.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Active Participle Formation in Pa'el</h4>\n                    <table>\n                        <tr><th>Root</th><th>Perfect Pa'el</th><th>Active Participle</th><th>Meaning</th></tr>\n                        <tr><td>ק.ט.ל</td><td>קַטֵּל (qattel)</td><td>מְקַטֵּל (meqattel)</td><td>massacring</td></tr>\n                        <tr><td>ד.ב.ר</td><td>דַּבֵּר (dabber)</td><td>מְדַבֵּר (medabber)</td><td>speaking</td></tr>\n                        <tr><td>ק.ד.ש</td><td>קַדֵּשׁ (qaddesh)</td><td>מְקַדֵּשׁ (meqaddesh)</td><td>sanctifying</td></tr>\n                        <tr><td>ש.ב.ח</td><td>שַׁבַּח (shabbaḥ)</td><td>מְשַׁבַּח (meshabbaḥ)</td><td>praising</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Demonstratives",
-    "question": "What is the Aramaic demonstrative pronoun for 'these'?",
+    "question": "What is the passive participle of the verb קט״ל in the Itpe'el binyan?",
     "options": [
-      "הָדֵין (haden)",
-      "אִלֵּין (illen)",
-      "הַהוּא (hahu)",
-      "הָדָא (hada)"
+      "מְקַטֵּל (meqattel)",
+      "מִתְקְטֵל (mitqetel)",
+      "קָטֵל (qatel)",
+      "קְטִיל (qetil)"
     ],
     "correct": 1,
     "explanation": "The passive participle of the verb קט״ל in Itpe'el is <b>מִתְקְטֵל</b> (mitqetel). The Itpe'el is the passive/reflexive form of Pe'al, and its participle reflects this passive meaning.",
@@ -66,12 +66,12 @@ export const demonstratives = [
   },
   {
     "category": "Demonstratives",
-    "question": "What is the Aramaic demonstrative pronoun for 'those'?",
+    "question": "What is the infinitive form of the verb קט״ל (to kill) in Pe'al?",
     "options": [
-      "אִלֵּין (illen)",
-      "אִנּוּן (innun)",
-      "הַנְּהוֹן (hann'hon)",
-      "הָדֵין (haden)"
+      "קָטְלָא (qatla)",
+      "קְטֹל (qetol)",
+      "מִקְטַל (miqtal)",
+      "קָטֵל (qatel)"
     ],
     "correct": 2,
     "explanation": "The infinitive form of the verb קט״ל (to kill) in Pe'al is <b>מִקְטַל</b> (miqtal). Infinitives in Aramaic are verbal nouns that express the action itself.",

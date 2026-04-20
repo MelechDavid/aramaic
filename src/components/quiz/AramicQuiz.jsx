@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../../roughquiz/quizdata/styles.css';
 import { quizData } from '../../data/quiz';
 
@@ -9,6 +9,7 @@ const AramicQuiz = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [showExplanation, setShowExplanation] = useState(false);
   const [incorrectOption, setIncorrectOption] = useState(null);
+  const quizTopRef = useRef(null);
   
   // Quiz configuration
   const quizConfig = {
@@ -47,6 +48,13 @@ const AramicQuiz = () => {
     } else {
       setQuizCompleted(true);
     }
+
+    // Scroll to top of quiz after advancing
+    setTimeout(() => {
+      if (quizTopRef.current) {
+        quizTopRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 50);
   };
 
   const handleRestartQuiz = () => {
@@ -107,7 +115,7 @@ const AramicQuiz = () => {
   }
 
   return (
-    <div className="quiz-container max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg text-gray-800 dark:text-gray-200">
+    <div ref={quizTopRef} className="quiz-container max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg text-gray-800 dark:text-gray-200">
       <div className="quiz-header mb-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Aramaic Quiz</h2>

@@ -1,38 +1,38 @@
 export const syntax = [
   {
     "category": "Syntax",
-    "question": "What is the typical word order in Talmudic Aramaic sentences?",
+    "question": "What does the Aramaic phrase מַאי טַעְמָא (mai ta'ama) mean?",
     "options": [
-      "Subject-Verb-Object (SVO)",
-      "Verb-Subject-Object (VSO)",
-      "Subject-Object-Verb (SOV)",
-      "Verb-Object-Subject (VOS)"
+      "What is your name?",
+      "What is the reason?",
+      "Who said this?",
+      "Where is it written?"
     ],
-    "correct": 0,
+    "correct": 1,
     "explanation": "The Aramaic phrase <b>מַאי טַעְמָא</b> (mai ta'ama) means 'what is the reason?' It is commonly used in Talmudic discussions to introduce a question about the rationale behind a statement or ruling.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Usage of מַאי טַעְמָא in Context</h4>\n                    <table>\n                        <tr><th>Phrase</th><th>Context</th><th>Function</th></tr>\n                        <tr><td>מַאי טַעְמָא</td><td>מַאי טַעְמָא דְּרַבִּי</td><td>What is the rabbi's reasoning?</td></tr>\n                        <tr><td>מַאי טַעְמָא</td><td>מַאי טַעְמָא קָאָמַר הָכִי</td><td>Why did he say so?</td></tr>\n                        <tr><td>מַאי טַעְמָא</td><td>מַאי טַעְמָא אָסוּר</td><td>Why is it forbidden?</td></tr>\n                        <tr><td>מַאי טַעְמָא</td><td>מַאי טַעְמָא דְּמִלְּתָא</td><td>What is the reason for this matter?</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Syntax",
-    "question": "What structure is commonly used in Aramaic to express possession?",
+    "question": "What does the Aramaic phrase תָּא שְׁמַע (ta sh'ma) mean?",
     "options": [
-      "Using a genitive case marking",
-      "Using a verb meaning 'to have'",
-      "Using a prepositional phrase with לְ (l'-)",
-      "Using construct state (status constructus)"
+      "Let us pray",
+      "Come and hear (introducing textual proof)",
+      "Listen carefully",
+      "Go in peace"
     ],
-    "correct": 2,
+    "correct": 1,
     "explanation": "The Aramaic phrase <b>תָּא שְׁמַע</b> (ta sh'ma) means 'come and hear', and is used to introduce textual evidence or proof in Talmudic discussions. It signals that a supporting text or teaching is about to be cited.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Usage of תָּא שְׁמַע in Talmudic Discourse</h4>\n                    <table>\n                        <tr><th>Phrase</th><th>Function</th><th>Context</th></tr>\n                        <tr><td>תָּא שְׁמַע</td><td>Introducing evidence</td><td>Presenting a text to support an argument</td></tr>\n                        <tr><td>תָּא שְׁמַע</td><td>Challenging a position</td><td>Offering a text that seems to contradict a position</td></tr>\n                        <tr><td>תָּא שְׁמַע</td><td>Resolving a question</td><td>Bringing definitive proof to settle a debate</td></tr>\n                        <tr><td>תָּא שְׁמַע</td><td>Introducing a baraita or Mishnah</td><td>Citing an authoritative text</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Syntax",
-    "question": "In Aramaic, how is negation typically expressed?",
+    "question": "What does the Aramaic phrase מְנָא הָנֵי מִילֵי (mena hanei milei) mean?",
     "options": [
-      "Using the prefix אִי- (i-)",
-      "Using the particle לָא (la)",
-      "Using the suffix לֵית (-leit)",
-      "Using the particle בַּר (bar)"
+      "What are these words?",
+      "From where are these matters derived?",
+      "Why is this important?",
+      "How many are there?"
     ],
     "correct": 1,
     "explanation": "The Aramaic phrase <b>מְנָא הָנֵי מִילֵי</b> (mena hanei milei) means 'from where are these matters derived?' It is used when seeking a textual source or scriptural basis for a particular teaching or law.",
@@ -40,25 +40,25 @@ export const syntax = [
   },
   {
     "category": "Syntax",
-    "question": "How are questions formed in Aramaic?",
+    "question": "What does the Aramaic phrase אִיבַּעְיָא לְהוּ (ibba'ya lehu) mean?",
     "options": [
-      "By changing the word order",
-      "By adding the prefix הַ- (ha-)",
-      "By using question particles like מִי (mi) or מָה (mah)",
-      "By raising intonation only"
+      "They said this",
+      "They inquired/asked (introducing a question)",
+      "They concluded",
+      "They disagreed"
     ],
-    "correct": 2,
+    "correct": 1,
     "explanation": "The Aramaic phrase <b>אִיבַּעְיָא לְהוּ</b> (ibba'ya lehu) means 'they inquired/asked', and is used to introduce a question or problem posed in the Talmud, often initiating a new topic of discussion.",
     "diagram": "<div class=\"aramaic-diagram\">\n                    <h4>Usage of אִיבַּעְיָא לְהוּ in Talmudic Discourse</h4>\n                    <table>\n                        <tr><th>Component</th><th>Meaning</th><th>Function in Discourse</th></tr>\n                        <tr><td>אִיבַּעְיָא (ibba'ya)</td><td>it was asked</td><td>Introduces a question</td></tr>\n                        <tr><td>לְהוּ (lehu)</td><td>to/for them</td><td>Indicates the questioning was collective</td></tr>\n                        <tr><td>אִיבַּעְיָא לְהוּ</td><td>it was asked by them/they inquired</td><td>Introduces a problem requiring resolution</td></tr>\n                        <tr><td>After this phrase</td><td>The actual question follows</td><td>Often followed by debate and resolution</td></tr>\n                    </table>\n                </div>"
   },
   {
     "category": "Syntax",
-    "question": "What is the function of the particle דְּ (de-) in Aramaic?",
+    "question": "What does the Aramaic term תֵּיקוּ (teiku) mean in Talmudic discussions?",
     "options": [
-      "Definite article",
-      "Relative pronoun and genitive marker",
-      "Interrogative particle",
-      "Negative particle"
+      "It is forbidden",
+      "Let it stand/remain undecided",
+      "It is permitted",
+      "The law follows this opinion"
     ],
     "correct": 1,
     "explanation": "The Aramaic term <b>תֵּיקוּ</b> (teiku) means 'let it stand/remain undecided'. It is used when the Talmud cannot reach a definitive conclusion on a particular question, leaving the matter unresolved.",
