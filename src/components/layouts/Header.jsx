@@ -9,9 +9,9 @@ const Header = () => {
     const { openFavorites, favorites } = useFavoritesContext();
 
     return (
-<header className="dark:bg-black bg-white" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+<header className="bg-gray-100 dark:bg-gray-900 -mx-4 px-4 pb-3 md:pb-4" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
     <div>
-<div className="flex justify-between w-full p-3 px-4 md:p-4 md:px-5 rounded-lg bg-gray-100 dark:bg-gray-900">
+<div className="flex justify-between w-full pt-3 md:pt-4">
                 <Logo />
                 <div className="flex flex-col items-center gap-1.5">
                     <GrammarButton />
@@ -48,7 +48,8 @@ const Header = () => {
                         <TextSizeButton />
                     </div>
                 </div>
-            </div></div>
+            </div>
+            </div>
         </header>
     );
 };

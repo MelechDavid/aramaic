@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  background-color: #f9fafb;
+}
+html.dark {
+  background-color: #030712;
+}
+
 /* iOS-specific fixes */
 @supports (-webkit-touch-callout: none) {
   /* iOS-specific fix for fixed positioning when keyboard is active */

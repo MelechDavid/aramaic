@@ -1,5 +1,9 @@
 {
   "appId": "com.david.aramaicdict",
   "appName": "Aramaic Dictionary",
-  "webDir": "dist"
+  "webDir": "dist",
+  "backgroundColor": "#f9fafb",
+  "ios": {
+    "backgroundColor": "#f9fafb"
+  }
 }

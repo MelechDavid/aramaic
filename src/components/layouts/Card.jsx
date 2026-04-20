@@ -34,7 +34,7 @@ const Card = () => {
     }, []);
 
     return (
-        <section className="h-fit w-full md:w-11/12 lg:w-8/12 xl:w-7/12 my-8 lg:my-10 lg:px-5">
+        <section className="h-fit w-full md:w-11/12 lg:w-8/12 xl:w-7/12 mb-8 lg:mb-10 lg:px-5">
             <div className="block">
                 <Header />
                 
