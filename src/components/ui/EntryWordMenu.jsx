@@ -52,9 +52,15 @@ const EntryWordMenu = ({ headwords, englishTerms, definition, word, subtitle, on
     try {
       const { Share } = await import("@capacitor/share");
       await Share.share({ text });
-    } catch {
+    } catch (e) {
+      // If user canceled the share sheet, just close — don't retry
+      if (e?.errorMessage === 'Share canceled' || e?.message === 'Share canceled') {
+        onClose();
+        return;
+      }
+      // Only fall back to Web Share API if Capacitor plugin is unavailable
       if (navigator.share) {
-        await navigator.share({ text });
+        try { await navigator.share({ text }); } catch { /* user canceled or unsupported */ }
       }
     }
     onClose();
