@@ -56,7 +56,7 @@ npx vite --host
 ```
 
 You can now access this application by navigating to http://localhost:5173/.
-
+Privacy Policy Last updated: July 28, 2026 ## Overview This app does not collect, store, or share any personal information from users. ## Data Collection This app does not collect any data, including: - Personal information - Account information - Location data - Contacts - Photos or videos - Camera or microphone data - Health or fitness data - Usage analytics - Advertising identifiers ## Data Storage The app does not use external servers, cloud storage, or databases. Any information created within the app remains on the user's device and is not transmitted to us. ## Third-Party Services This app does not use third-party services that collect user data. ## Children's Privacy This app does not knowingly collect personal information from children or any users. ## Changes to This Privacy Policy If this privacy policy changes, updates will be posted on this page. ## Contact If you have questions about this Privacy Policy, contact: [David Weinberg] [horseshaq@gmail.com]
 ### Author
 [David Weinberg](mailto:dave.a.weinberg@gmail.com)
 
